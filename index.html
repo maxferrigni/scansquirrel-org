@@ -6,23 +6,13 @@
 <title>Scan Squirrel — What would you like to digitize?</title>
 <meta name="description" content="Tell us what you have. Scan it yourself, or find someone local.">
 <meta name="robots" content="noindex">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=DM+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/css/base.css">
 
 <style>
 /* ═══ index9 — full-screen splash front door (test) ═══ */
 :root {
-  --bone:   #f0ebe3;
-  --warm:   #f5f0e8;
-  --cream:  #e8e1d5;
-  --feather:#2a2a2a;
-  --ink:    #1a1a1a;
-  --ash:    #6b6660;
-  --acorn:  #8b5e3c;
-  --acorn2: #a0693f;
-  --teal:   #2c6e6a;
-  --nest:   #d4c9b8;
+  /* brand tokens (bone, ink, acorn, teal, nest, fonts…) come from css/base.css */
+  --acorn2: var(--acorn-bright);
   --dim:    #9a9488;
   --line:   rgba(42,42,42,0.12);
   --line-d: rgba(212,201,184,0.16);

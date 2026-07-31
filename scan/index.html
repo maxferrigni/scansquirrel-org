@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Local Photo Scanning Near You — Scan Squirrel (Los Angeles)</title>
-<meta name="description" content="Local photo scanning in Los Angeles. No shipping, no anonymous warehouse. Describe your old photos and get free guidance or a local quote from a trusted Squirrel who comes to you.">
+<title>Photo Scanning — Scan Squirrel (Los Angeles)</title>
+<meta name="description" content="Local photo scanning in Los Angeles. Describe your old photos and get free guidance, or have a trusted local Squirrel scan them for you.">
 <link rel="canonical" href="https://scansquirrel.org/scan/">
 <link rel="stylesheet" href="/css/base.css">
 
@@ -25,46 +25,28 @@ function gtag_report_conversion(url) {
 </script>
 
 <style>
-/* ═══ /scan/ — focused photo-scanning ad landing page ═══ */
-:root { --paper:#faf7f1; --line:rgba(42,42,42,0.12); }
+/* ═══ scansquirrel.org/scan/ — minimal photo landing page ═══ */
+:root { --paper:#faf7f1; --line:rgba(42,42,42,0.12); --line-d:rgba(212,201,184,0.16); --dim:#9a9488; }
 * { box-sizing:border-box; margin:0; padding:0; }
-body { font-family:var(--font-body); color:var(--ink); background:var(--paper); line-height:1.55; -webkit-font-smoothing:antialiased; }
-h1,h2,h3 { font-family:var(--font-display); font-weight:400; letter-spacing:-0.02em; line-height:1.1; }
-.wrap { max-width:680px; margin:0 auto; padding:0 1.4rem; }
-section { padding:3.5rem 0; }
-.rule { border-top:1px solid var(--line); }
+body { font-family:'DM Sans',sans-serif; color:var(--ink); background:var(--paper); line-height:1.55; -webkit-font-smoothing:antialiased; }
 
-/* header */
-.head { display:flex; align-items:center; justify-content:space-between; gap:1rem; max-width:940px; margin:0 auto; padding:1.2rem 1.4rem; flex-wrap:wrap; }
-.brand { display:inline-flex; align-items:center; gap:0.3em; font-family:var(--font-display); font-size:1.4rem; color:var(--acorn); text-decoration:none; }
-.brand .ph { width:0.8em; height:0.8em; }
-.head .exp { flex:1 1 100%; order:3; font-size:0.82rem; color:var(--ash); }
-.head nav { display:flex; gap:1.2rem; }
-.head nav a { font-size:0.88rem; font-weight:500; color:var(--feather); text-decoration:none; }
-.head nav a:hover { color:var(--acorn); }
-@media (min-width:720px){ .head .exp { flex:none; order:0; } }
+.page { padding:4.5rem 1.5rem 4rem; text-align:center; }
+.col { width:100%; max-width:560px; margin:0 auto; }
 
-/* hero + prompt */
-.hero { text-align:center; padding-top:2.5rem; }
-.hero h1 { font-size:clamp(2.2rem,6vw,3.2rem); color:var(--ink); margin-bottom:1rem; }
-.hero .sub { font-size:1.12rem; color:var(--feather); max-width:34rem; margin:0 auto 2.2rem; }
-.prompt { text-align:left; max-width:560px; margin:0 auto; }
-.prompt .label { font-size:0.9rem; font-weight:600; color:var(--feather); margin-bottom:0.55rem; }
-.prompt textarea { width:100%; min-height:120px; padding:1.1rem 1.2rem; border:1px solid var(--line); border-radius:14px; font:inherit; font-size:1.05rem; line-height:1.6; color:var(--ink); background:#fff; resize:vertical; box-shadow:0 3px 16px rgba(92,74,58,0.06); }
-.prompt textarea::placeholder { color:#a89e90; }
-.prompt textarea:focus { outline:none; border-color:var(--acorn); }
-.examples { min-height:1.4em; margin-top:0.8rem; font-size:0.92rem; color:var(--ash); opacity:0; transition:opacity .45s ease; }
+.logo { display:inline-flex; align-items:center; gap:0.34em; font-family:'Fraunces',serif; font-weight:500; font-size:clamp(2.6rem,8vw,4rem); line-height:1; letter-spacing:-0.02em; color:var(--acorn); text-decoration:none; margin-bottom:1.3rem; }
+.logo .ph { width:0.82em; height:0.82em; flex:none; margin-top:0.06em; }
+.intro { font-size:1.12rem; line-height:1.55; color:var(--feather); max-width:34rem; margin:0 auto 2rem; }
+
+/* box */
+.intake { text-align:left; }
+.searchbox { width:100%; padding:1.15rem 1.4rem; border:1px solid var(--line); border-radius:999px; font:inherit; font-size:1.08rem; color:var(--ink); background:#fff; box-shadow:0 2px 16px rgba(92,74,58,0.07); transition:box-shadow .2s ease,border-color .2s ease; }
+.searchbox::placeholder { color:#a89e90; }
+.searchbox:focus { outline:none; border-color:var(--acorn); box-shadow:0 6px 26px rgba(92,74,58,0.14); }
+.examples { min-height:1.4em; text-align:center; margin-top:1.1rem; font-size:0.95rem; color:var(--ash); opacity:0; transition:opacity .45s ease; }
 .examples.vis { opacity:1; }
-.actions { display:flex; align-items:center; gap:1rem; flex-wrap:wrap; margin-top:1.4rem; }
-.btn { font:inherit; font-size:1rem; font-weight:600; padding:0.85rem 1.7rem; border:none; border-radius:11px; background:var(--acorn); color:var(--bone); cursor:pointer; text-decoration:none; transition:background .2s ease; }
-.btn:hover { background:var(--acorn-bright); color:var(--bone); }
-.btn.ghost { background:#fff; color:var(--bark); border:1px solid var(--line); }
-.btn.ghost:hover { background:var(--cream); }
-.upload { font-size:0.9rem; color:var(--teal); background:none; border:none; cursor:pointer; text-decoration:underline; text-underline-offset:2px; }
-.reassure { display:block; font-size:0.88rem; color:var(--ash); margin-top:1rem; }
 
 /* conversation */
-.convo { display:none; text-align:left; max-width:560px; margin:1.5rem auto 0; }
+.convo { display:none; text-align:left; margin-top:0.5rem; }
 .convo.show { display:block; }
 .bubble { margin-bottom:1rem; }
 .bubble.ai .who { font-size:0.72rem; font-weight:600; letter-spacing:0.1em; color:var(--teal); margin-bottom:0.35rem; }
@@ -74,228 +56,141 @@ section { padding:3.5rem 0; }
 .answers { display:flex; flex-wrap:wrap; gap:0.5rem; margin:0.3rem 0 1.3rem; }
 .chip { font:inherit; font-size:0.9rem; padding:0.45rem 0.9rem; border:1px solid var(--line); border-radius:9px; background:#fff; color:var(--ash); cursor:pointer; }
 .chip:hover { border-color:var(--acorn); color:var(--acorn); }
+.zip-row { display:flex; gap:0.5rem; margin-bottom:1.3rem; }
+.zip-row input { flex:1; padding:0.7rem 0.9rem; border:1px solid var(--line); border-radius:9px; font:inherit; font-size:1rem; background:var(--warm); }
+.btn { font:inherit; font-size:1rem; font-weight:600; padding:0.8rem 1.6rem; border:none; border-radius:10px; background:var(--acorn); color:var(--bone); cursor:pointer; text-decoration:none; }
+.btn:hover { background:var(--acorn-bright); color:var(--bone); }
+.btn.ghost { background:transparent; color:var(--acorn); border:1px solid var(--line); }
+.g-actions { display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:0.9rem; }
 
-/* contact */
-.contact { text-align:center; }
-.contact h2 { font-size:1.6rem; margin-bottom:0.5rem; }
-.contact p { color:var(--feather); max-width:32rem; margin:0 auto 1.4rem; }
-.contact-row { display:flex; justify-content:center; gap:0.7rem; flex-wrap:wrap; }
+/* capabilities */
+.caps { margin-top:4rem; }
+.caps h2 { font-family:'Fraunces',serif; font-weight:400; font-size:1.5rem; color:var(--ink); margin-bottom:0.8rem; }
+.caps p { font-size:1rem; line-height:1.65; color:var(--feather); max-width:34rem; margin:0 auto; }
 
-/* local squirrel */
-.sq { display:grid; grid-template-columns:130px 1fr; gap:1.5rem; align-items:start; }
-.sq .photo { width:130px; height:130px; border-radius:14px; border:2px dashed rgba(139,94,60,0.3); background:var(--warm); display:flex; align-items:center; justify-content:center; text-align:center; color:var(--branch); font-size:0.72rem; padding:0.5rem; }
-.sq .eyebrow { font-size:0.72rem; font-weight:700; letter-spacing:0.13em; text-transform:uppercase; color:var(--teal); }
-.sq h2 { font-size:1.7rem; margin:0.2rem 0 0.4rem; }
-.sq .area { font-size:0.9rem; color:var(--ash); margin-bottom:0.8rem; }
-.sq p { color:var(--feather); font-size:0.98rem; margin-bottom:1rem; }
-.sq .sq-actions { display:flex; gap:0.6rem; flex-wrap:wrap; }
-@media (max-width:560px){ .sq { grid-template-columns:1fr; } .sq .photo { margin:0 auto; } }
-
-/* proof */
-.stats { display:flex; justify-content:center; gap:2.5rem; flex-wrap:wrap; margin-bottom:2.5rem; }
-.stat { text-align:center; }
-.stat .n { font-family:var(--font-display); font-size:2.2rem; color:var(--teal); }
-.stat .l { font-size:0.82rem; color:var(--ash); }
-.reviews { display:grid; gap:1rem; }
-.rev { background:#fff; border:1px solid var(--line); border-radius:14px; padding:1.2rem 1.3rem; }
-.rev p { font-size:0.95rem; font-style:italic; color:var(--feather); margin-bottom:0.5rem; }
-.rev .who { font-size:0.8rem; color:var(--ash); font-weight:600; }
-.ba { margin-top:1.4rem; border:2px dashed rgba(139,94,60,0.3); border-radius:14px; padding:2.4rem 1rem; text-align:center; color:var(--branch); font-size:0.88rem; background:var(--warm); }
-.samplenote { text-align:center; font-size:0.78rem; color:var(--branch); margin-top:0.9rem; }
-
-/* why */
-.why h2 { font-size:1.6rem; margin-bottom:0.8rem; }
-.why p { color:var(--feather); margin-bottom:1.4rem; }
-.points { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem 1.6rem; }
-.points div { font-size:0.95rem; color:var(--feather); }
-.points b { color:var(--teal); }
-@media (max-width:560px){ .points { grid-template-columns:1fr; } }
-
-/* footer */
-.foot { background:var(--feather); color:var(--nest); padding:3rem 1.4rem; text-align:center; }
-.foot .story { max-width:34rem; margin:0 auto 2rem; color:var(--nest); font-size:0.98rem; line-height:1.6; }
-.foot .links { display:flex; flex-wrap:wrap; justify-content:center; gap:0.5rem 1.3rem; font-size:0.85rem; }
-.foot .links a { color:var(--nest); text-decoration:none; }
-.foot .links a:hover { color:var(--bone); }
-.foot .copy { font-size:0.78rem; color:#9a9488; margin-top:1.4rem; }
+/* dark footer — same as the scansquirrel.org homepage */
+.dark { background:var(--feather); color:var(--nest); padding:5rem 1.5rem 3rem; }
+.dark-inner { max-width:920px; margin:0 auto; }
+.dark-cols { display:flex; gap:3.5rem; align-items:flex-start; justify-content:center; text-align:left; }
+.dark-cols > div { flex:1; max-width:360px; }
+.mcol .mission { font-family:'Fraunces',serif; font-size:1.3rem; line-height:1.6; color:var(--bone); }
+.ocol { border-left:1px solid var(--line-d); padding-left:3.5rem; }
+.ocol h3 { font-family:'Fraunces',serif; font-weight:400; font-size:1.5rem; color:var(--bone); margin-bottom:0.6rem; }
+.ocol p { font-size:0.98rem; color:var(--nest); margin-bottom:1.3rem; }
+.ocol .btn.ghost { color:var(--nest); border-color:rgba(212,201,184,0.4); display:inline-block; }
+.ocol .btn.ghost:hover { background:rgba(212,201,184,0.12); }
+.ocol .indep { font-size:0.85rem; color:var(--dim); margin-top:1.6rem; line-height:1.5; }
+.dark-foot { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-top:4rem; padding-top:1.6rem; border-top:1px solid var(--line-d); font-size:0.85rem; color:var(--nest); }
+.dark-foot a { text-decoration:none; color:var(--nest); }
+.dark-foot a:hover { color:var(--bone); }
+.dark-foot .mid { text-align:center; font-size:0.8rem; color:var(--dim); }
+.dark-foot .mid .copy { margin-top:0.35rem; }
+@media (max-width:760px){
+  .dark { padding:3.5rem 1.4rem 2.5rem; }
+  .dark-cols { flex-direction:column; align-items:center; text-align:center; gap:2.75rem; }
+  .dark-cols > div { max-width:26rem; }
+  .ocol { border-left:none; padding-left:0; border-top:1px solid var(--line-d); padding-top:2.75rem; width:100%; }
+  .dark-foot { flex-direction:column; text-align:center; gap:0.5rem; margin-top:2.75rem; }
+}
 </style>
 </head>
 <body>
 
-<!-- 1. HEADER -->
-<header class="head">
-  <a class="brand" href="/">
-    <span>Scan</span>
-    <svg class="ph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><circle cx="8.5" cy="10" r="1.7"/><path d="M4 16.5l4.5-4 3.5 3 3-3 5 4.5"/></svg>
-    <span>Squirrel</span>
-  </a>
-  <nav>
-    <a href="#why">How it works</a>
-    <a href="#contact">Contact</a>
-    <a href="#">Log in</a>
-  </nav>
-  <p class="exp">Scan Squirrel helps people digitize old photos themselves or find trusted local help.</p>
-</header>
+<main class="page">
+  <div class="col">
+    <a class="logo" href="/">
+      <span>Scan</span>
+      <svg class="ph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><circle cx="8.5" cy="10" r="1.7"/><path d="M4 16.5l4.5-4 3.5 3 3-3 5 4.5"/></svg>
+      <span>Squirrel</span>
+    </a>
 
-<!-- 2 + 3. HERO + PROMPT -->
-<section class="hero">
-  <div class="wrap">
-    <h1 id="heroTitle">Need old photos scanned?</h1>
-    <p class="sub">Tell us what you have. We'll help you understand the simplest way to digitize it — whether you scan it yourself or get help from someone local.</p>
+    <p class="intro">Need old photos scanned? Tell us what you have — we'll help you digitize them yourself, or connect you with a trusted local Squirrel who can.</p>
 
-    <div class="prompt" id="prompt">
-      <div class="label" id="promptLabel">Describe your photo project</div>
-      <textarea id="projText" placeholder="I have three shoeboxes of family photos, some with writing on the backs…"></textarea>
+    <div class="intake" id="intake">
+      <input class="searchbox" id="projText" type="text" autocomplete="off"
+             placeholder="Describe your photos, or ask a question…"
+             onkeydown="if(event.key==='Enter'){event.preventDefault();startConvo();}">
       <p class="examples" id="examples">&ldquo;I have three shoeboxes of family photos.&rdquo;</p>
-      <div class="actions">
-        <button class="btn" onclick="startConvo()">Get free guidance</button>
-        <button class="upload" type="button" onclick="document.getElementById('photoUpload').click()">or send a photo of your collection</button>
-        <input type="file" id="photoUpload" accept="image/*" capture="environment" hidden onchange="startConvo(true)">
-      </div>
-      <span class="reassure">No need to count everything. No account or commitment required.</span>
     </div>
-
     <div class="convo" id="convo"></div>
-  </div>
-</section>
 
-<!-- 4. HUMAN CONTACT -->
-<section class="rule contact" id="contact">
-  <div class="wrap">
-    <h2>Prefer to talk to someone?</h2>
-    <p>Tell us what you'd like to do, email your question, or call or text us directly. Advice is always free.</p>
-    <div class="contact-row">
-      <a class="btn" href="mailto:hello@scansquirrel.com" onclick="return gtag_report_conversion('mailto:hello@scansquirrel.com');">Email Scan Squirrel</a>
-      <a class="btn ghost" href="tel:+12132902327" onclick="gtag('event','conversion',{'send_to':'AW-17990603569/QULVCOeUgMEcELGmy4JD'});">Call or text (213) 290-2327</a>
-      <button class="btn ghost" type="button" onclick="document.getElementById('photoUpload').click()">Send a picture of my collection</button>
+    <div class="caps">
+      <h2>What we do with old photos</h2>
+      <p>Prints of any size and era — scanned at high resolution, faded color brought back, scratches and creases cleaned up, and everything returned to you organized and dated. Do it yourself with free guidance, or a local Squirrel handles it all and returns your originals.</p>
     </div>
   </div>
-</section>
+</main>
 
-<!-- 5. LOCAL SQUIRREL -->
-<section class="rule">
-  <div class="wrap sq">
-    <div class="photo">[ real photo of<br>your local Squirrel ]</div>
-    <div>
-      <div class="eyebrow">Your local Squirrel</div>
-      <h2>Max</h2>
-      <p class="area">Serving Eastside Los Angeles, Pasadena, Eagle Rock, Glassell Park &amp; nearby communities.</p>
-      <p>One local person reviews your collection, agrees on the price, handles the scanning, and returns your originals. No shipping warehouse, no anonymous handoffs.</p>
-      <div class="sq-actions">
-        <a class="btn" href="tel:+12132902327" onclick="gtag('event','conversion',{'send_to':'AW-17990603569/QULVCOeUgMEcELGmy4JD'});">Call or text Max</a>
-        <a class="btn ghost" href="sms:+12132902327" onclick="gtag('event','conversion',{'send_to':'AW-17990603569/JB9MCOqUgMEcELGmy4JD'});">Text a photo</a>
+<section class="dark" id="become">
+  <div class="dark-inner">
+    <div class="dark-cols">
+      <div class="mcol">
+        <p class="mission">Scan Squirrel was started after the Eaton and Palisades fires — to help people memorialize and digitize their photos, documents, and keepsakes before they're lost.</p>
+      </div>
+      <div class="ocol">
+        <h3>Become a squirrel</h3>
+        <p>Have a scanner? Use Scan Squirrel's tools to preserve memories for your neighbors — and earn.</p>
+        <a class="btn ghost" href="#">Learn about becoming a squirrel</a>
+        <p class="indep">Squirrels are independent and set their own pricing, schedule, and services.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- 6. PROOF -->
-<section class="rule">
-  <div class="wrap">
-    <div class="stats">
-      <div class="stat"><div class="n">120+</div><div class="l">local projects</div></div>
-      <div class="stat"><div class="n">50,000+</div><div class="l">photos preserved</div></div>
-      <div class="stat"><div class="n">4.9&#9733;</div><div class="l">average rating</div></div>
-    </div>
-    <div class="reviews">
-      <div class="rev"><p>"The whole thing was simple — I described my boxes, Max picked them up, and I had everything back in a couple of days."</p><span class="who">— sample review (real testimonials coming soon)</span></div>
-      <div class="rev"><p>"I loved that a real local person handled my photos. Nothing got shipped across the country."</p><span class="who">— sample review (real testimonials coming soon)</span></div>
-      <div class="rev"><p>"My originals came back safe and organized, and I didn't have to buy a scanner or spend a weekend on it."</p><span class="who">— sample review (real testimonials coming soon)</span></div>
-    </div>
-    <div class="ba">[ Before / After: a faded print restored to full color ]</div>
-    <p class="samplenote">Sample figures and reviews shown — real numbers and approved testimonials to be added.</p>
-  </div>
-</section>
-
-<!-- 7. WHY LOCAL -->
-<section class="rule why" id="why">
-  <div class="wrap">
-    <h2>Why use a local Squirrel?</h2>
-    <p>Professional photo scanners can cost hundreds of dollars, and a large collection takes real time to prepare, scan, review, organize, and deliver properly. A local Squirrel already has the equipment and the experience.</p>
-    <div class="points">
-      <div><b>&check;</b> Local pickup and return</div>
-      <div><b>&check;</b> Price agreed before work begins</div>
-      <div><b>&check;</b> Originals remain nearby</div>
-      <div><b>&check;</b> Scanned and organized properly</div>
+    <div class="dark-foot">
+      <a href="mailto:hello@scansquirrel.com" onclick="return gtag_report_conversion('mailto:hello@scansquirrel.com');">hello@scansquirrel.com</a>
+      <div class="mid">
+        <div>Free guidance &middot; Local operators &middot; Scan it yourself</div>
+        <div class="copy">&copy; 2026 Scan Squirrel</div>
+      </div>
+      <a href="tel:+12132902327" onclick="gtag('event','conversion',{'send_to':'AW-17990603569/QULVCOeUgMEcELGmy4JD'});">(213) 290-2327</a>
     </div>
   </div>
 </section>
-
-<!-- 8. FOOTER STORY -->
-<footer class="foot">
-  <p class="story">Scan Squirrel began after the Los Angeles fires highlighted how quickly family photographs and personal history can disappear. The project is being built to give families practical tools, free guidance, and access to trusted local people who can help preserve their memories.</p>
-  <div class="links">
-    <a href="#contact">Contact</a>
-    <a href="#">Customer login</a>
-    <a href="#">Squirrel login</a>
-    <a href="#">View my photos</a>
-    <a href="https://scansquirrel.com/privacy.html">Privacy</a>
-    <a href="https://scansquirrel.com/terms.html">Terms</a>
-    <a href="#">Become a squirrel</a>
-  </div>
-  <p class="copy">&copy; 2026 Scan Squirrel &middot; Los Angeles, CA</p>
-</footer>
 
 <script>
-/* ── type config: same page serves each ad group via ?type= ── */
-var TYPES = {
-  photos:    { title:"Need old photos scanned?",     label:"Describe your photo project",     noun:"photos",
-    ex:["I have three shoeboxes of family photos.","My parents left me several old albums.","I have loose photos with writing on the backs.","I'm not sure how many photos I have.","I need these scanned before clearing out a house."] },
-  slides:    { title:"Need old slides scanned?",      label:"Describe your slide project",      noun:"slides",
-    ex:["I have carousels of 35mm slides from the 70s.","A box of slides I've never been able to view.","Hundreds of vacation slides from my dad.","Not sure how many slides I have — a few trays."] },
-  negatives: { title:"Need old negatives scanned?",   label:"Describe your negative project",   noun:"negatives",
-    ex:["Envelopes of film negatives from decades of photos.","Negatives but no prints — can you scan these?","A shoebox of old negative strips."] },
-  documents: { title:"Need documents scanned?",       label:"Describe your document project",   noun:"documents",
-    ex:["Old family records and certificates.","A file box of documents I want digitized.","Letters and paperwork I need preserved."] },
-  albums:    { title:"Need photo albums scanned?",    label:"Describe your album project",      noun:"photo albums",
-    ex:["Bound albums I'm afraid to take apart.","Several old family albums with captions.","Grandma's albums before they fall apart."] }
-};
-var t = (new URLSearchParams(location.search).get('type') || 'photos').toLowerCase();
-var CFG = TYPES[t] || TYPES.photos;
-document.getElementById('heroTitle').textContent = CFG.title;
-document.getElementById('promptLabel').textContent = CFG.label;
-document.getElementById('projText').placeholder = "I have " + CFG.noun + " I'd like to digitize…";
-
-/* ── capture (console only until an endpoint is added) ── */
 var LOG_URL = '';
-function logIt(d){ d.type=t; d.ts=new Date().toISOString(); if(LOG_URL){try{fetch(LOG_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});}catch(e){}} else {console.log('[intake]',d);} }
+function logIt(d){ d.ts=new Date().toISOString(); if(LOG_URL){try{fetch(LOG_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});}catch(e){}} else {console.log('[intake]',d);} }
 
-/* ── rotating example prompts ── */
+/* rotating photo examples */
 function shuffle(a){ for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=a[i];a[i]=a[j];a[j]=x;} return a; }
-var EX = shuffle(CFG.ex.slice()), exi=0, exTimer=null, exEl=document.getElementById('examples');
+var EX = shuffle([
+  "I have three shoeboxes of family photos.",
+  "My mother just passed away and I want to scan her old photos.",
+  "Hundreds of loose photos with writing on the backs.",
+  "Old family albums I'm afraid to take apart.",
+  "I need these scanned before clearing out a house.",
+  "What would it cost, and can I do it myself?"
+]);
+var exi=0, exTimer=null, exEl=document.getElementById('examples');
 exEl.innerHTML='&ldquo;'+EX[0]+'&rdquo;';
 function rot(){ exEl.classList.remove('vis'); setTimeout(function(){ exEl.innerHTML='&ldquo;'+EX[exi]+'&rdquo;'; exi=(exi+1)%EX.length; exEl.classList.add('vis'); },450); }
 setTimeout(function(){ exEl.classList.add('vis'); },300);
 setTimeout(function(){ rot(); exTimer=setInterval(rot,3800); },3800);
 
-/* ── mocked AI intake conversation ── */
+/* mocked AI intake */
 var convo=document.getElementById('convo'), state={};
 function aiB(h){ var d=document.createElement('div'); d.className='bubble ai'; d.innerHTML='<div class="who">Scan Squirrel</div><div class="msg">'+h+'</div>'; convo.appendChild(d); d.scrollIntoView({behavior:'smooth',block:'center'}); }
 function meB(x){ var d=document.createElement('div'); d.className='bubble me'; d.innerHTML='<div class="msg">'+x+'</div>'; convo.appendChild(d); }
 function ansRow(opts,cb){ var r=document.createElement('div'); r.className='answers'; opts.forEach(function(o){ var b=document.createElement('button'); b.className='chip'; b.textContent=o; b.onclick=function(){ r.remove(); meB(o); cb(o); }; r.appendChild(b); }); convo.appendChild(r); r.scrollIntoView({behavior:'smooth',block:'center'}); }
-function startConvo(fromPhoto){
+function startConvo(){
   if(exTimer) clearInterval(exTimer);
   var txt=document.getElementById('projText').value.trim();
-  if(!txt && !fromPhoto){ document.getElementById('projText').focus(); return; }
-  document.getElementById('prompt').style.display='none';
-  convo.classList.add('show');
-  var opening = txt || 'I just added a photo of my '+CFG.noun+'.';
-  state.text=txt; logIt({event:'started',text:txt,photo:!!fromPhoto});
-  meB(opening);
-  setTimeout(function(){ aiB("Thanks — that helps. A couple of quick questions.<br><br><b>Roughly how much do you have?</b>"); ansRow(['A shoebox or two','A closet full','A few albums','Not sure'], q2); },350);
+  if(!txt){ document.getElementById('projText').focus(); return; }
+  document.getElementById('intake').style.display='none';
+  convo.classList.add('show'); state.text=txt; logIt({event:'started',text:txt});
+  meB(txt);
+  setTimeout(function(){ aiB("Got it. A couple of quick questions.<br><br><b>Roughly how many photos?</b>"); ansRow(['A shoebox or two','A closet full','A few albums','Not sure'], q2); },350);
 }
-function q2(s){ state.size=s; setTimeout(function(){ aiB("<b>Would you rather scan it yourself, or have a local Squirrel do it?</b>"); ansRow(['Do it myself','Get local help','Help me decide'], q3); },300); }
+function q2(s){ state.size=s; setTimeout(function(){ aiB("<b>Scan them yourself, or have a local Squirrel do it?</b>"); ansRow(['Myself','Get help','Help me decide'], q3); },300); }
 function q3(p){ state.pref=p; setTimeout(function(){
-  aiB("<b>What ZIP code are you in?</b> I'll check who serves your area.");
-  var r=document.createElement('div'); r.className='answers';
-  r.innerHTML='<input id="zipIn" inputmode="numeric" maxlength="5" placeholder="91101" style="flex:1;padding:0.7rem 0.9rem;border:1px solid var(--line);border-radius:9px;font:inherit;"><button class="btn" type="button">Check</button>';
+  aiB("<b>What ZIP code are you in?</b>");
+  var r=document.createElement('div'); r.className='zip-row';
+  r.innerHTML='<input id="zipIn" inputmode="numeric" maxlength="5" placeholder="91101"><button class="btn" type="button">Check</button>';
   r.querySelector('button').onclick=function(){ var z=r.querySelector('#zipIn').value.trim()||'91101'; state.zip=z; logIt({event:'completed',text:state.text,size:state.size,pref:state.pref,zip:z}); r.remove(); meB(z); guide(); };
   convo.appendChild(r); r.querySelector('#zipIn').focus(); r.scrollIntoView({behavior:'smooth',block:'center'});
 },300); }
 function guide(){
   var hrs = state.size==='A closet full'?'25–40 hours':state.size==='A few albums'?'5–10 hours':'15–25 hours';
   setTimeout(function(){
-    aiB("Sounds like a <b>medium collection</b>. Doing it yourself well usually takes about <b>"+hrs+"</b> and the right scanner. Good news — <b>Max covers your area.</b><br><br>He can pick it up, scan and organize everything, and return your originals — price agreed before any work.<br><br><span style='font-size:0.85rem;color:var(--ash);'>General guidance, not a final price — Max confirms that with you.</span><div class='actions'><a class='btn' href='tel:+12132902327' onclick=\"gtag('event','conversion',{'send_to':'AW-17990603569/QULVCOeUgMEcELGmy4JD'});\">Call or text Max</a><a class='btn ghost' href='mailto:hello@scansquirrel.com' onclick=\"return gtag_report_conversion('mailto:hello@scansquirrel.com');\">Email your project</a></div>");
+    aiB("Sounds like a <b>medium collection</b>. Doing it yourself well usually takes about <b>"+hrs+"</b> and the right scanner. You can scan it yourself with free guidance, or a local Squirrel can pick it up, scan and organize everything, and return your originals — price agreed first.<br><br><span style='font-size:0.85rem;color:var(--ash);'>General guidance, not a final price.</span><div class='g-actions'><a class='btn' href='tel:+12132902327' onclick=\"gtag('event','conversion',{'send_to':'AW-17990603569/QULVCOeUgMEcELGmy4JD'});\">Call or text us</a><a class='btn ghost' href='mailto:hello@scansquirrel.com' onclick=\"return gtag_report_conversion('mailto:hello@scansquirrel.com');\">Email your project</a></div>");
     var b=document.createElement('button'); b.className='chip'; b.textContent='↺ Start over'; b.style.marginTop='1.2rem'; b.onclick=function(){ location.reload(); }; convo.appendChild(b);
   },450);
 }
