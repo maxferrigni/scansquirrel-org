@@ -42,7 +42,8 @@ body { font-family:'DM Sans',sans-serif; color:var(--ink); background:var(--pape
 
 .logo { display:inline-flex; align-items:center; gap:0.34em; font-family:'Fraunces',serif; font-weight:500; font-size:clamp(2.6rem,8vw,4rem); line-height:1; letter-spacing:-0.02em; color:var(--acorn); text-decoration:none; margin-bottom:1.3rem; }
 .logo .ph { width:0.82em; height:0.82em; flex:none; margin-top:0.06em; }
-.intro { font-size:1.12rem; line-height:1.55; color:var(--feather); max-width:34rem; margin:0 auto 2rem; }
+.intro { font-size:1.18rem; line-height:1.55; color:var(--feather); max-width:35rem; margin:0 auto 2rem; }
+.intro strong { color:var(--ink); font-weight:600; }
 
 /* box */
 .intake { text-align:left; }
@@ -70,10 +71,16 @@ body { font-family:'DM Sans',sans-serif; color:var(--ink); background:var(--pape
 .btn.ghost { background:transparent; color:var(--acorn); border:1px solid var(--line); }
 .g-actions { display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:0.9rem; }
 
-/* capabilities */
-.caps { margin-top:4rem; }
+/* capabilities + validation */
+.caps { max-width:820px; margin:4.5rem auto 0; }
 .caps h2 { font-family:'Fraunces',serif; font-weight:400; font-size:1.5rem; color:var(--ink); margin-bottom:0.8rem; }
-.caps p { font-size:1rem; line-height:1.65; color:var(--feather); max-width:34rem; margin:0 auto; }
+.caps .lead { font-size:1rem; line-height:1.65; color:var(--feather); max-width:34rem; margin:0 auto 2.6rem; }
+.tms { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; text-align:left; }
+.tm { background:#fff; border:1px solid var(--line); border-radius:14px; padding:1.2rem 1.3rem; }
+.tm p { font-size:0.93rem; font-style:italic; color:var(--feather); margin-bottom:0.5rem; }
+.tm .who { font-size:0.8rem; color:var(--ash); font-weight:600; }
+.tmnote { font-size:0.78rem; color:var(--ash); margin-top:1rem; }
+@media (max-width:640px){ .tms { grid-template-columns:1fr; } }
 
 /* dark footer — same as the scansquirrel.org homepage */
 .dark { background:var(--feather); color:var(--nest); padding:5rem 1.5rem 3rem; }
@@ -122,7 +129,7 @@ body { font-family:'DM Sans',sans-serif; color:var(--ink); background:var(--pape
       <span>Squirrel</span>
     </a>
 
-    <p class="intro">Need old photos scanned? Tell us what you have — we'll help you digitize them yourself, or connect you with a trusted local Squirrel who can.</p>
+    <p class="intro"><strong>Scan Squirrel scans your old photos locally — often in under 48 hours.</strong> A trusted Squirrel comes to your door, scans everything, and brings your originals back. Describe what you need below, or just call or email us.</p>
 
     <div class="intake" id="intake">
       <input class="searchbox" id="projText" type="text" autocomplete="off"
@@ -131,11 +138,17 @@ body { font-family:'DM Sans',sans-serif; color:var(--ink); background:var(--pape
       <p class="examples" id="examples">&ldquo;I have three shoeboxes of family photos.&rdquo;</p>
     </div>
     <div class="convo" id="convo"></div>
+  </div>
 
-    <div class="caps">
-      <h2>What we do with old photos</h2>
-      <p>Prints of any size and era — scanned at high resolution, faded color brought back, scratches and creases cleaned up, and everything returned to you organized and dated. Do it yourself with free guidance, or a local Squirrel handles it all and returns your originals.</p>
+  <div class="caps">
+    <h2>What we do with old photos</h2>
+    <p class="lead">Prints of any size and era — scanned at high resolution, faded color brought back, scratches and creases cleaned up, and everything returned to you organized and dated. Do it yourself with free guidance, or a local Squirrel handles it all and returns your originals.</p>
+    <div class="tms">
+      <div class="tm"><p>"Dropped off two shoeboxes and had everything back on my phone in two days. So easy."</p><span class="who">— sample review</span></div>
+      <div class="tm"><p>"A real local person came to my door — nothing shipped across the country. I loved that."</p><span class="who">— sample review</span></div>
+      <div class="tm"><p>"Forty years of faded photos, restored and organized. I didn't have to buy a scanner or spend a weekend on it."</p><span class="who">— sample review</span></div>
     </div>
+    <p class="tmnote">Sample testimonials — real, approved ones coming soon.</p>
   </div>
 </main>
 
