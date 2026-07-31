@@ -1,0 +1,223 @@
+/*
+  ═══════════════════════════════════════════════════════════
+  Scan Squirrel — Territory Page Styles
+  Loaded only by /squirrels/[neighborhood]/ pages.
+  ═══════════════════════════════════════════════════════════
+
+  Prefix: .ter-
+  Content width: inherits .wrap (720px) from base.css.
+  Requires: base.css (tokens, type, buttons, layout)
+  Do NOT redeclare :root, fonts, reset, or button base here.
+*/
+
+/* ── Page background ── */
+.ter-page {
+  background:
+    radial-gradient(circle at top left, rgba(139, 94, 60, 0.08), transparent 30rem),
+    var(--bone);
+}
+
+/* ── Hero ── */
+.ter-hero {
+  padding: 4rem 0 3rem;
+  text-align: center;
+}
+
+.ter-hero .label { margin-bottom: 0.8rem; }
+
+.ter-hero h1 {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.ter-hero-sub {
+  font-size: 0.95rem;
+  color: var(--ash);
+  margin-top: 0.8rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── Sections ── */
+.ter-section {
+  padding: 2.5rem 0;
+}
+
+.ter-section + .ter-section {
+  padding-top: 0;
+}
+
+/* ── Body text ── */
+.ter-body {
+  font-size: 0.95rem;
+  color: var(--feather);
+  line-height: 1.65;
+  margin-bottom: 1rem;
+}
+
+.ter-body:last-child { margin-bottom: 0; }
+
+/* ── Media type grid (5-column icon row with grades) ── */
+.ter-media {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  margin: 1.2rem 0;
+}
+
+.ter-media-item {
+  text-align: center;
+}
+
+.ter-media-item a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.ter-media-item a:hover img {
+  border-color: var(--acorn);
+}
+
+.ter-media-item img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--line);
+  background: var(--bone);
+  padding: 0.5rem;
+  transition: border-color 0.2s;
+}
+
+.ter-media-item h3 {
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
+.ter-grade {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--teal);
+  margin-top: 0.2rem;
+}
+
+/* ── Coffee / meetup cards ── */
+.ter-spots {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.2rem 0;
+}
+
+.ter-spot {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--teal);
+  border-radius: var(--radius-card);
+  padding: 1.1rem 1.25rem;
+}
+
+.ter-spot h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+}
+
+.ter-spot-addr {
+  font-size: 0.82rem;
+  color: var(--ash);
+  line-height: 1.45;
+  margin-bottom: 0.5rem;
+}
+
+.ter-spot-desc {
+  font-size: 0.88rem;
+  color: var(--feather);
+  line-height: 1.5;
+  margin-bottom: 0.6rem;
+}
+
+.ter-spot-map {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--acorn);
+  text-decoration: none;
+}
+
+.ter-spot-map:hover { color: var(--acorn-bright); }
+
+/* ── Full-width image ── */
+.ter-img {
+  width: 100%;
+  border-radius: var(--radius-card);
+  margin: 1.5rem 0;
+}
+
+/* ── Two-up image grid (side by side photos) ── */
+.ter-imgs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+.ter-imgs img {
+  width: 100%;
+  border-radius: var(--radius-card);
+  object-fit: cover;
+  aspect-ratio: 4 / 3;
+}
+
+/* ── CTA block ── */
+.ter-cta {
+  background: var(--feather);
+  border-radius: var(--radius-card);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  margin: 2rem 0 1rem;
+}
+
+.ter-cta h2 {
+  color: var(--bone);
+  margin-bottom: 0.5rem;
+}
+
+.ter-cta p {
+  color: var(--nest);
+  margin-bottom: 1.2rem;
+  max-width: 440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .ter-media {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 540px) {
+  .ter-spots {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .ter-imgs {
+    grid-template-columns: 1fr;
+  }
+
+  .ter-imgs img {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (max-width: 400px) {
+  .ter-media {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

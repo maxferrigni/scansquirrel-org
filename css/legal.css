@@ -1,0 +1,166 @@
+/*
+  ═══════════════════════════════════════════════════════════
+  Scan Squirrel — Legal Page Styles
+  Loaded only by terms.html, privacy.html, release.html.
+  ═══════════════════════════════════════════════════════════
+
+  Prefix: .legal-
+  Quiet document layout. Max-width 760px.
+  Entity: Stock Precision LLC dba Scan Squirrel
+  Requires: base.css (tokens, type, buttons, layout)
+  Do NOT redeclare :root, fonts, reset, or button base here.
+*/
+
+/* ── Page wrapper ── */
+.legal-page {
+  background: var(--bone);
+}
+
+.legal-wrap {
+  max-width: calc(760px + (var(--pad-x) * 2));
+  margin: 0 auto;
+  padding: 4rem var(--pad-x);
+}
+
+/* ── Header ── */
+.legal-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.legal-header h1 {
+  margin-bottom: 0.5rem;
+}
+
+.legal-updated {
+  color: var(--ash);
+  font-size: 0.9rem;
+}
+
+/* ── Summary box ── */
+.legal-summary {
+  margin: 1.5rem 0 2rem;
+  padding: 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+
+.legal-summary h2,
+.legal-summary h3 {
+  margin-bottom: 0.4rem;
+}
+
+.legal-summary p {
+  color: var(--ash);
+}
+
+/* ── Table of contents ── */
+.legal-toc {
+  margin: 1.5rem 0 2.5rem;
+  padding: 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--warm);
+}
+
+.legal-toc h2,
+.legal-toc h3 {
+  margin-bottom: 0.75rem;
+}
+
+.legal-toc ol,
+.legal-toc ul {
+  columns: 2;
+  column-gap: 2rem;
+}
+
+.legal-toc li {
+  break-inside: avoid;
+  margin-bottom: 0.35rem;
+}
+
+.legal-toc a {
+  color: var(--acorn);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.legal-toc a:hover {
+  color: var(--acorn-bright);
+}
+
+/* ── Content sections ── */
+.legal-section {
+  padding: 1.6rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.legal-section h2 {
+  margin-bottom: 0.8rem;
+}
+
+.legal-section h3 {
+  margin: 1.1rem 0 0.4rem;
+}
+
+.legal-section p,
+.legal-section li {
+  color: var(--ash);
+}
+
+.legal-section a {
+  color: var(--acorn);
+  font-weight: 700;
+}
+
+.legal-section a:hover {
+  color: var(--acorn-bright);
+}
+
+.legal-section ul,
+.legal-section ol {
+  margin: 0.75rem 0 1rem;
+}
+
+/* ── Contact box ── */
+.legal-contact {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border-radius: var(--radius-card);
+  background: var(--feather);
+  color: var(--bone);
+}
+
+.legal-contact h2,
+.legal-contact h3 {
+  color: var(--bone);
+  margin-bottom: 0.4rem;
+}
+
+.legal-contact p,
+.legal-contact li {
+  color: var(--nest);
+}
+
+.legal-contact a {
+  color: var(--bone);
+  font-weight: 700;
+}
+
+.legal-contact a:hover {
+  color: var(--acorn-bright);
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .legal-wrap {
+    padding-block: 3rem;
+  }
+
+  .legal-toc ol,
+  .legal-toc ul {
+    columns: 1;
+  }
+}

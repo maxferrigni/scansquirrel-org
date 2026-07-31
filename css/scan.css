@@ -1,0 +1,203 @@
+/*
+  ═══════════════════════════════════════════════════════════
+  Scan Squirrel — Scan Page Styles
+  Loaded only by /scan/* pages (photographs, slides,
+  negatives, documents, articles).
+  ═══════════════════════════════════════════════════════════
+
+  Prefix: .scan-
+  Requires: base.css (tokens, type, buttons, layout)
+  Do NOT redeclare :root, fonts, reset, or button base here.
+*/
+
+/* ── Page background ── */
+.scan-page {
+  background:
+    radial-gradient(circle at top right, rgba(44, 110, 106, 0.08), transparent 30rem),
+    var(--bone);
+}
+
+/* ── Hero ── */
+.scan-hero {
+  padding: 4rem 0 3rem;
+}
+
+.scan-hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.scan-hero-title {
+  max-width: 12em;
+}
+
+.scan-hero-lede {
+  margin-top: 0.8rem;
+  color: var(--ash);
+  font-size: 1.05rem;
+  max-width: 42rem;
+}
+
+.scan-hero-actions {
+  margin-top: 1.25rem;
+}
+
+.scan-hero-art {
+  display: flex;
+  justify-content: center;
+}
+
+.scan-hero-img {
+  width: min(100%, 320px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+  padding: 1rem;
+}
+
+.scan-hero-img img {
+  width: 100%;
+  object-fit: contain;
+}
+
+/* ── Spec summary (DPI, price, turnaround) ── */
+.scan-specs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+  margin-top: 2rem;
+}
+
+.scan-spec {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+
+.scan-spec-label {
+  display: block;
+  color: var(--teal);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.scan-spec-value {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* ── Content sections ── */
+.scan-section {
+  padding: 3rem 0;
+}
+
+.scan-section + .scan-section {
+  border-top: 1px solid var(--line);
+}
+
+.scan-section-head {
+  max-width: 44rem;
+  margin-bottom: 1.5rem;
+}
+
+.scan-section-head p {
+  color: var(--ash);
+}
+
+/* ── Grids ── */
+.scan-grid     { display: grid; gap: 1rem; }
+.scan-grid-2   { grid-template-columns: repeat(2, 1fr); }
+.scan-grid-3   { grid-template-columns: repeat(3, 1fr); }
+
+/* ── Cards ── */
+.scan-card {
+  padding: 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+
+.scan-card h3 { margin-bottom: 0.4rem; }
+.scan-card p, .scan-card li { color: var(--ash); }
+
+/* ── Process steps (numbered) ── */
+.scan-process {
+  counter-reset: scan-step;
+  display: grid;
+  gap: 1rem;
+}
+
+.scan-step {
+  position: relative;
+  padding: 1.2rem 1.2rem 1.2rem 3.4rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+
+.scan-step::before {
+  counter-increment: scan-step;
+  content: counter(scan-step);
+  position: absolute;
+  top: 1.1rem;
+  left: 1.1rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--teal);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.scan-step h3 { margin-bottom: 0.3rem; }
+.scan-step p  { color: var(--ash); }
+
+/* ── Note / callout ── */
+.scan-note {
+  padding: 1rem;
+  border-left: 4px solid var(--teal);
+  border-radius: var(--radius-small);
+  background: rgba(44, 110, 106, 0.08);
+  color: var(--ink);
+}
+
+/* ── CTA ── */
+.scan-cta {
+  margin-top: 2.5rem;
+  padding: 2.5rem 2rem;
+  border-radius: var(--radius-card);
+  background: var(--feather);
+  text-align: center;
+}
+
+.scan-cta h2, .scan-cta h3 { color: var(--bone); margin-bottom: 0.5rem; }
+.scan-cta p {
+  color: var(--nest);
+  margin-bottom: 1.2rem;
+  max-width: 440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── Responsive ── */
+@media (max-width: 800px) {
+  .scan-hero-grid,
+  .scan-specs,
+  .scan-grid-2,
+  .scan-grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .scan-hero { padding: 3rem 0 2.5rem; }
+  .scan-hero-title { max-width: none; }
+}

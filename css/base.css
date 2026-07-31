@@ -1,0 +1,317 @@
+/*
+  ═══════════════════════════════════════════════════════════
+  Scan Squirrel — Base Styles
+  Loaded by every page on scansquirrel.com.
+  ═══════════════════════════════════════════════════════════
+
+  DESIGN SYSTEM REFERENCE
+  ────────────────────────
+  Source of truth: /docs/scansquirrel-styleguide.html
+
+  Color tokens         Hex        Usage
+  ─────────────────────────────────────────────────────
+  --bone               #f0ebe3    Page background
+  --warm               #f5f0e8    Alt surface
+  --cream              #e8e1d5    Soft fill
+  --feather            #2a2a2a    Dark sections (NOT --ink)
+  --ink                #1a1a1a    Body text only
+  --acorn              #8b5e3c    Primary buttons
+  --acorn-bright       #a0693f    Button hover
+  --teal               #2c6e6a    Accent only — labels, step numbers, card borders
+  --ash                #6b6660    Muted text
+  --nest               #d4c9b8    Text on dark backgrounds
+  --branch             #8b7e6a    Secondary muted
+  --bark               #5c4a3a    Dark warm text
+
+  Type scale           Font       Size     Weight  Case
+  ─────────────────────────────────────────────────────
+  H1                   Fraunces   2.2rem   400     Sentence
+  H2                   Fraunces   1.5rem   400     Sentence
+  H3                   Fraunces   1.1rem   600     Sentence
+  H4                   Fraunces   1rem     600     Sentence
+  Body                 DM Sans    0.95rem  400     —
+  Section label        DM Sans    0.72rem  700     Uppercase (CSS)
+  Buttons              DM Sans    0.95rem  700     Sentence
+
+  Hero-lg variant      (add .hero-lg to a wrapper)
+  H1                   Fraunces   2.8rem   400
+  H2                   Fraunces   1.9rem   400
+
+  Radius standard
+  ─────────────────────────────────────────────────────
+  Cards / panels:      8px
+  Buttons / pills:     6px
+
+  Layout widths
+  ─────────────────────────────────────────────────────
+  .wrap                720px      Default (FAQ, Pricing, territory, scan)
+  .wrap-wide           960px      Marketing pages (Index, Compare, Squirrels hub)
+
+  Font weights used: 400, 500, 600, 700. Weight 800 is NOT used.
+
+  Em dashes:           &mdash;
+  Middots:             &middot;
+  Dark sections:       --feather (#2a2a2a), never --ink (#1a1a1a)
+  Teal is an accent:   never a section background
+*/
+
+/* ── Fonts ── */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@400;500;600;700&display=swap");
+
+/* ── Tokens ── */
+:root {
+  --ink:           #1a1a1a;
+  --bone:          #f0ebe3;
+  --warm:          #f5f0e8;
+  --cream:         #e8e1d5;
+  --feather:       #2a2a2a;
+  --acorn:         #8b5e3c;
+  --acorn-bright:  #a0693f;
+  --ash:           #6b6660;
+  --nest:          #d4c9b8;
+  --branch:        #8b7e6a;
+  --bark:          #5c4a3a;
+  --teal:          #2c6e6a;
+
+  --font-body:     'DM Sans', sans-serif;
+  --font-display:  'Fraunces', serif;
+
+  --radius-card:   8px;
+  --radius-small:  6px;
+
+  --wrap:          720px;
+  --wrap-wide:     960px;
+  --pad-x:         1.5rem;
+
+  --line:          rgba(0, 0, 0, 0.08);
+  --line-strong:   rgba(0, 0, 0, 0.14);
+  --shadow-soft:   0 2px 8px rgba(92, 74, 58, 0.07);
+}
+
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--bone);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, picture, svg, video { display: block; max-width: 100%; }
+button, input, textarea, select { font: inherit; }
+
+a { color: inherit; text-decoration-thickness: 0.08em; text-underline-offset: 0.18em; }
+a:hover { color: var(--acorn); }
+
+p { margin-bottom: 1rem; }
+p:last-child { margin-bottom: 0; }
+
+ul, ol { padding-left: 1.25rem; }
+li + li { margin-top: 0.35rem; }
+
+/* ── Type scale ── */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: clamp(1.9rem, 4vw, 2.2rem);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: clamp(1.3rem, 3vw, 1.5rem);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* Hero-lg variant — for marketing pages */
+.hero-lg h1, h1.hero-lg {
+  font-size: clamp(2.2rem, 5.5vw, 2.8rem);
+}
+
+.hero-lg h2, h2.hero-lg {
+  font-size: clamp(1.5rem, 4vw, 1.9rem);
+}
+
+/* ── Section label ── */
+.label {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  line-height: 1.2;
+  margin-bottom: 0.6rem;
+}
+
+/* ── Eyebrow nav (media type links) ── */
+.eyebrow {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--branch);
+  margin-bottom: 1rem;
+}
+
+.eyebrow a { color: var(--branch); text-decoration: none; }
+.eyebrow a:hover { color: var(--acorn); }
+.eyebrow span { color: var(--nest); margin: 0 0.35rem; }
+
+/* ── Layout ── */
+.wrap, .wrap-wide {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--pad-x);
+}
+
+.wrap      { max-width: calc(var(--wrap) + (var(--pad-x) * 2)); }
+.wrap-wide { max-width: calc(var(--wrap-wide) + (var(--pad-x) * 2)); }
+
+/* ── Buttons ── */
+.btn, .btn-ghost {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--radius-small);
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  cursor: pointer;
+}
+
+.btn {
+  background: var(--acorn);
+  color: #fff;
+  border: 1.5px solid var(--acorn);
+}
+
+.btn:hover {
+  background: var(--acorn-bright);
+  border-color: var(--acorn-bright);
+  color: #fff;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--acorn);
+  border: 1.5px solid var(--acorn);
+}
+
+.btn-ghost:hover {
+  background: rgba(139, 94, 60, 0.08);
+  color: var(--acorn-bright);
+  border-color: var(--acorn-bright);
+}
+
+/* Button row — for side-by-side CTAs */
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+/* ── CTA strip (shared by FAQ, Pricing, etc.) ── */
+.cta-strip {
+  text-align: center;
+  padding: 2.5rem 2rem;
+  background: var(--feather);
+  border-radius: var(--radius-card);
+}
+
+.cta-strip h2, .cta-strip h3 {
+  color: var(--bone);
+  margin-bottom: 0.5rem;
+}
+
+.cta-strip p {
+  color: var(--nest);
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+  max-width: 440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-strip .btn {
+  background: var(--acorn);
+  color: #fff;
+}
+
+.cta-strip .btn:hover {
+  background: var(--acorn-bright);
+}
+
+/* ── Card / Panel ── */
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+}
+
+/* Card with teal left accent (per style guide) */
+.card-accent {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--teal);
+  border-radius: var(--radius-card);
+}
+
+/* ── Utilities ── */
+.muted       { color: var(--ash); }
+.text-center { text-align: center; }
+.bg-warm     { background: var(--warm); }
+.bg-bone     { background: var(--bone); }
+.bg-dark     { background: var(--feather); color: var(--bone); }
+.bg-dark h1, .bg-dark h2, .bg-dark h3 { color: var(--bone); }
+.bg-dark p   { color: var(--nest); }
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  :root {
+    --pad-x: 1.1rem;
+  }
+
+  .btn, .btn-ghost {
+    width: 100%;
+    text-align: center;
+  }
+
+  .btn-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

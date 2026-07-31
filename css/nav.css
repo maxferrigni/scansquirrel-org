@@ -1,0 +1,362 @@
+/* Shared nav for ScanSquirrel
+   Loaded into #nav-placeholder by /js/nav-loader.js
+   Color variables (--ink, --bone, --acorn-bright, --teal, etc.)
+   are defined in each page's :root block. */
+
+nav#nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0.6rem 2rem 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: rgba(240, 235, 227, 0.97);
+  backdrop-filter: blur(12px);
+}
+
+.nav-left { display: flex; flex-direction: column; }
+.nav-logo {
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+}
+.nav-logo span {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.nav-logo:hover span {
+  color: var(--acorn-bright);
+  border-bottom-color: var(--acorn-bright);
+}
+
+.nav-subtitle {
+  font-size: 0.9rem;
+  font-weight: 500;
+  min-height: 1.3rem;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  margin-top: 0.1rem;
+}
+.nav-subtitle.visible { opacity: 1; }
+.nav-subtitle .label {
+  font-weight: 700;
+  color: var(--teal);
+  margin-right: 0.4rem;
+}
+.nav-subtitle .text { color: var(--ink); }
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  padding-top: 0.5rem;
+}
+.nav-menu a {
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+.nav-menu a:hover { color: var(--acorn-bright); }
+.nav-menu a.active {
+  color: var(--acorn-bright);
+  font-weight: 700;
+  border-bottom: 2px solid var(--acorn-bright);
+  padding-bottom: 2px;
+}
+.nav-menu a.nav-phone {
+  order: 10;
+  color: var(--acorn-bright);
+  font-weight: 700;
+  border: 1.5px solid var(--acorn-bright);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  margin-left: 0.6rem;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.nav-menu a.nav-phone:hover {
+  background: var(--acorn-bright);
+  color: var(--bone);
+}
+.nav-menu a.nav-email {
+  order: 11;
+  color: var(--bone);
+  font-weight: 700;
+  background: var(--acorn);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  margin-left: 0.2rem;
+  transition: background 0.2s ease;
+}
+.nav-menu a.nav-email:hover {
+  background: var(--acorn-bright);
+  color: var(--bone);
+}
+
+/* ---- Hamburger toggle button (desktop hidden, mobile only) ---- */
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+  color: var(--acorn);
+  font-size: 1.6rem;
+  line-height: 1;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 768px) {
+  nav#nav {
+    padding: 0.5rem 1rem;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+  .nav-logo span { font-size: 1.4rem; }
+  .nav-subtitle { display: none; }
+
+  /* Show hamburger */
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    color: var(--acorn);
+    transition: color 0.2s ease;
+  }
+  .nav-toggle:hover,
+  .nav-toggle:focus { color: var(--acorn-bright); outline: none; }
+
+  /* Menu becomes a full-width dropdown panel below the nav */
+  .nav-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: auto;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+    background: rgba(240, 235, 227, 0.98);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--cream);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: max-height 0.25s ease, opacity 0.2s ease;
+  }
+  nav#nav.menu-open .nav-menu {
+    max-height: 80vh;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Dropdown menu items — generous tap targets */
+  .nav-menu a {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: right;
+    padding: 0.9rem 1.25rem;
+    min-height: 44px;
+    font-size: 1rem;
+    color: var(--ink);
+    border-bottom: 1px solid var(--cream);
+    border-left: none;
+    border-right: 3px solid transparent;
+  }
+  .nav-menu a:last-child { border-bottom: none; }
+
+  /* Active page highlight in dropdown */
+  .nav-menu a.active {
+    background: var(--warm);
+    border-right-color: var(--acorn);
+    border-bottom: 1px solid var(--cream);
+    padding-bottom: 0.9rem;
+    color: var(--acorn-bright);
+  }
+
+  /* Phone link — first in mobile dropdown, 10% larger */
+  .nav-menu a.nav-phone {
+    order: -2;
+    border: none;
+    border-bottom: 1px solid var(--cream);
+    border-right: 3px solid transparent;
+    border-radius: 0;
+    padding: 0.9rem 1.25rem;
+    margin-left: 0;
+    background: transparent;
+    color: var(--acorn-bright);
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+  .nav-menu a.nav-phone:hover { background: transparent; color: var(--acorn-bright); }
+
+  /* Email — second in mobile dropdown, 10% larger */
+  .nav-menu a.nav-email {
+    order: -1;
+    border: none;
+    border-bottom: 1px solid var(--cream);
+    border-right: 3px solid transparent;
+    border-radius: 0;
+    padding: 0.9rem 1.25rem;
+    margin-left: 0;
+    background: transparent;
+    color: var(--acorn);
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+  .nav-menu a.nav-email:hover { background: transparent; color: var(--acorn-bright); }
+
+  /* Anchor links should clear the smaller mobile nav, not the desktop 5rem */
+  body section[id] { scroll-margin-top: 4rem; }
+}
+
+/* ============================================================
+   Shared eyebrow nav
+   ============================================================ */
+.eyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal, #2c6e6a);
+  margin-bottom: 0.75rem;
+}
+.eyebrow a,
+.eyebrow a:link,
+.eyebrow a:visited {
+  color: var(--teal, #2c6e6a);
+  text-decoration: none;
+}
+.eyebrow a:hover {
+  color: var(--acorn, #8b5e3c);
+}
+@media (max-width: 768px) {
+  .eyebrow { display: none; }
+}
+
+/* ============================================================
+   Sub-footer — mobile scan-type icon strip
+   ============================================================ */
+.subfooter { display: none; }
+@media (max-width: 768px) {
+  .subfooter {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.25rem;
+    background: var(--warm, #f5f0e8);
+    padding: 1rem 0.5rem;
+    border-top: 1px solid var(--cream, #e8e0d4);
+  }
+  .subfooter a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+  }
+  .subfooter img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+  }
+  .subfooter span {
+    display: none;
+  }
+}
+
+/* ============================================================
+   Shared footer
+   ============================================================ */
+footer {
+  background: var(--feather, #2a2a2a);
+  padding: 2.75rem 3rem 2.5rem;
+}
+footer p { margin: 0; }
+.footer-inner {
+  max-width: 540px;
+  margin: 0 auto;
+  text-align: center;
+}
+.footer-logo {
+  display: inline-block;
+  line-height: 0;
+}
+.footer-logo img {
+  width: 240px;
+  height: auto;
+  display: block;
+}
+footer .ft {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--bone, #f0ebe3);
+  margin-top: 0.6rem;
+  margin-bottom: 1.4rem;
+}
+.footer-cta { display: none; }
+@media (max-width: 768px) {
+  footer .ft { margin-bottom: 0.8rem; }
+  .footer-cta {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+    max-width: 320px;
+    margin: 0 auto 1.4rem;
+  }
+  .footer-cta a {
+    display: block;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.6rem 0;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+  .footer-cta a:nth-child(odd) {
+    background: var(--acorn, #8b5e3c);
+    color: #fff;
+  }
+  .footer-cta a:nth-child(even) {
+    background: transparent;
+    color: var(--bone, #f0ebe3);
+    border: 2px solid var(--bone, #f0ebe3);
+  }
+  .footer-cta a:nth-child(odd):hover {
+    background: var(--acorn-bright, #a0693f);
+  }
+}
+.footer-legal { margin-bottom: 0.9rem; }
+.footer-legal a {
+  color: var(--nest, #d4c9b8);
+  text-decoration: none;
+  font-size: 0.82rem;
+}
+.footer-legal a:hover {
+  color: var(--bone, #f0ebe3);
+}
+.footer-copy {
+  font-size: 0.78rem;
+  color: var(--ash, #6b6660);
+  margin-bottom: 0.3rem;
+}
+.footer-credit {
+  font-size: 0.72rem;
+  color: var(--branch, #8b7e6a);
+  font-style: italic;
+}
