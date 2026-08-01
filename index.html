@@ -115,8 +115,8 @@ a.corner:hover { color: var(--acorn); }
 <header class="hero">
   <span class="corner tl">A Los Angeles photo-preservation project</span>
   <nav class="topauth">
-    <a href="#">Client log in</a>
-    <a href="#">Squirrel log in</a>
+    <a href="https://app.scansquirrel.com/sign-in" target="_blank" rel="noopener" title="Client accounts coming soon">Client log in</a>
+    <a href="https://app.scansquirrel.com/sign-in" target="_blank" rel="noopener">Squirrel log in</a>
   </nav>
 
   <div class="col">
@@ -153,7 +153,7 @@ a.corner:hover { color: var(--acorn); }
       <div class="ocol">
         <h3>Become a squirrel</h3>
         <p>Have a scanner? Use Scan Squirrel's tools to preserve memories for your neighbors — and earn.</p>
-        <a class="btn ghost" href="#">Learn about becoming a squirrel</a>
+        <a class="btn ghost" href="mailto:hello@scansquirrel.com?subject=Becoming%20a%20Squirrel">Learn about becoming a squirrel</a>
         <p class="indep">Squirrels are independent and set their own pricing, schedule, and services.</p>
       </div>
     </div>
@@ -174,7 +174,9 @@ a.corner:hover { color: var(--acorn); }
    (free form at formspree.io → paste its URL here). Until then, console only. ── */
 var LOG_URL = '';
 function logIt(data){
-  data.ts = new Date().toISOString();
+  /* payload matches the app's planned POST /api/leads: { text, size, pref, zip, timestamp, source } */
+  data.timestamp = new Date().toISOString();
+  data.source = 'scansquirrel.org';
   if (LOG_URL){ try { fetch(LOG_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data) }); } catch(e){} }
   else { console.log('[intake]', data); }
 }

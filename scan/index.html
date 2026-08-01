@@ -128,8 +128,8 @@ body { font-family:'DM Sans',sans-serif; color:var(--ink); background:var(--pape
     </a>
   </div>
   <div class="bar-right">
-    <a class="bar-link" href="#">Client login</a>
-    <a class="bar-link" href="#">Squirrel login</a>
+    <a class="bar-link" href="https://app.scansquirrel.com/sign-in" target="_blank" rel="noopener" title="Client accounts coming soon">Client login</a>
+    <a class="bar-link" href="https://app.scansquirrel.com/sign-in" target="_blank" rel="noopener">Squirrel login</a>
   </div>
 </header>
 
@@ -171,7 +171,7 @@ body { font-family:'DM Sans',sans-serif; color:var(--ink); background:var(--pape
       <div class="ocol">
         <h3>Become a squirrel</h3>
         <p>Have a scanner? Use Scan Squirrel's tools to preserve memories for your neighbors — and earn.</p>
-        <a class="btn ghost" href="#">Learn about becoming a squirrel</a>
+        <a class="btn ghost" href="mailto:hello@scansquirrel.com?subject=Becoming%20a%20Squirrel">Learn about becoming a squirrel</a>
         <p class="indep">Squirrels are independent and set their own pricing, schedule, and services.</p>
       </div>
     </div>
@@ -188,7 +188,9 @@ body { font-family:'DM Sans',sans-serif; color:var(--ink); background:var(--pape
 
 <script>
 var LOG_URL = '';
-function logIt(d){ d.ts=new Date().toISOString(); if(LOG_URL){try{fetch(LOG_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});}catch(e){}} else {console.log('[intake]',d);} }
+/* payload matches the app's planned POST /api/leads: { text, size, pref, zip, timestamp, source }.
+   Set LOG_URL to that endpoint once it's live. */
+function logIt(d){ d.timestamp=new Date().toISOString(); d.source='scansquirrel.org/scan'; if(LOG_URL){try{fetch(LOG_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});}catch(e){}} else {console.log('[intake]',d);} }
 
 /* rotating photo examples */
 function shuffle(a){ for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var x=a[i];a[i]=a[j];a[j]=x;} return a; }
