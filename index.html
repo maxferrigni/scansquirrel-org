@@ -250,8 +250,8 @@ setTimeout(function(){ tagEl.classList.add('vis'); }, 300);
 setTimeout(function(){ rotateTag(); exTimer = setInterval(rotateTag, 3500); }, 3500);
 
 var convo = document.getElementById('convo'), state = {};
-function aiBubble(html){ var d=document.createElement('div'); d.className='bubble ai'; d.innerHTML='<div class="who">Scan Squirrel</div><div class="msg">'+html+'</div>'; convo.appendChild(d); d.scrollIntoView({behavior:'smooth',block:'center'}); }
-function meBubble(t){ var d=document.createElement('div'); d.className='bubble me'; d.innerHTML='<div class="msg">'+t+'</div>'; convo.appendChild(d); }
+function aiBubble(html){ var d=document.createElement('div'); d.className='bubble ai'; d.innerHTML='<div class="who">Scan Squirrel</div><div class="msg">'+html+'</div>'; addToConvo(d); }
+function meBubble(t){ var d=document.createElement('div'); d.className='bubble me'; d.innerHTML='<div class="msg">'+t+'</div>'; addToConvo(d); }
 
 /* ═══ SQUIRREL TALK — real Claude conversation ══════════════════════════
    The API key lives on the backend, never here. This page only POSTs the
@@ -267,7 +267,7 @@ var TALK_URL = API_BASE + '/api/squirrel-talk/chat';
 var talkHistory = [];      // [{role, content}] — the transcript we send each turn
 var convoId = null;        // server-assigned on turn 1; echoed back so turns group in the log
 var busy = false;
-var replyInput = null, replyBtn = null;
+var replyInput = null, replyBtn = null, replyRow = null;
 
 function esc(s){ return String(s).replace(/[&<>"]/g, function(c){
   return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
@@ -279,17 +279,24 @@ function renderReply(text){
   }).join('<br><br>');
 }
 
+/* The reply box lives at the bottom of the thread; every new node goes above it. */
+function addToConvo(el){
+  if (replyRow && replyRow.parentNode === convo) convo.insertBefore(el, replyRow);
+  else convo.appendChild(el);
+  el.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
 function showTyping(){
   var d = document.createElement('div');
   d.className = 'bubble ai'; d.id = 'typing';
   d.innerHTML = '<div class="who">Scan Squirrel</div><div class="typing"><span></span><span></span><span></span></div>';
-  convo.appendChild(d); d.scrollIntoView({behavior:'smooth', block:'center'});
+  addToConvo(d);
 }
 function hideTyping(){ var t = document.getElementById('typing'); if (t) t.remove(); }
 
 function ensureReplyBox(){
   if (replyInput) return;
-  var row = document.createElement('div'); row.className = 'reply-row';
+  var row = document.createElement('div'); row.className = 'reply-row'; replyRow = row;
   row.innerHTML = '<input id="replyIn" type="text" autocomplete="off" placeholder="Reply…">'
                 + '<button class="btn" type="button">Send</button>';
   convo.appendChild(row);
@@ -308,7 +315,7 @@ function setBusy(v){
 function talkError(msg){
   var d = document.createElement('div'); d.className = 'talk-err';
   d.textContent = msg + ' You can always email hello@scansquirrel.com or call (213) 290-2327.';
-  convo.appendChild(d); d.scrollIntoView({behavior:'smooth', block:'center'});
+  addToConvo(d);
 }
 
 /* Send the whole transcript; render the reply. */
