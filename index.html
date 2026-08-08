@@ -264,7 +264,7 @@ function meBubble(t){ var d=document.createElement('div'); d.className='bubble m
 var API_BASE = 'https://backend-development-4bb2.up.railway.app';  // DEV backend
 var TALK_URL = API_BASE + '/api/squirrel-talk/chat';
 
-var history = [];      // [{role, content}] — the transcript we send each turn
+var talkHistory = [];      // [{role, content}] — the transcript we send each turn
 var busy = false;
 var replyInput = null, replyBtn = null;
 
@@ -317,7 +317,7 @@ function askSquirrel(){
   fetch(TALK_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ source: 'scansquirrel.org', messages: history })
+    body: JSON.stringify({ source: 'scansquirrel.org', messages: talkHistory })
   }).then(function(r){
     return r.json().then(function(data){ return { ok: r.ok, status: r.status, data: data }; });
   }).then(function(res){
@@ -328,7 +328,7 @@ function askSquirrel(){
       return;
     }
     var reply = res.data.reply || '';
-    history.push({ role: 'assistant', content: reply });
+    talkHistory.push({ role: 'assistant', content: reply });
     aiBubble(renderReply(reply));
     ensureReplyBox();
     setBusy(false);
@@ -349,7 +349,7 @@ function startConvo(){
   state.text = txt;
   logIt({ event: 'started', text: txt });
   meBubble(esc(txt));
-  history.push({ role: 'user', content: txt });
+  talkHistory.push({ role: 'user', content: txt });
   askSquirrel();
 }
 
@@ -359,8 +359,8 @@ function sendReply(){
   if (!txt) return;
   replyInput.value = '';
   meBubble(esc(txt));
-  history.push({ role: 'user', content: txt });
-  logIt({ event: 'reply', text: txt, turns: history.length });
+  talkHistory.push({ role: 'user', content: txt });
+  logIt({ event: 'reply', text: txt, turns: talkHistory.length });
   askSquirrel();
 }
 </script>
