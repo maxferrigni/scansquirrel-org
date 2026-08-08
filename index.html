@@ -265,6 +265,7 @@ var API_BASE = 'https://backend-development-4bb2.up.railway.app';  // DEV backen
 var TALK_URL = API_BASE + '/api/squirrel-talk/chat';
 
 var talkHistory = [];      // [{role, content}] — the transcript we send each turn
+var convoId = null;        // server-assigned on turn 1; echoed back so turns group in the log
 var busy = false;
 var replyInput = null, replyBtn = null;
 
@@ -317,7 +318,7 @@ function askSquirrel(){
   fetch(TALK_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ source: 'scansquirrel.org', messages: talkHistory })
+    body: JSON.stringify({ source: 'scansquirrel.org', messages: talkHistory, conversation_id: convoId })
   }).then(function(r){
     return r.json().then(function(data){ return { ok: r.ok, status: r.status, data: data }; });
   }).then(function(res){
@@ -327,6 +328,7 @@ function askSquirrel(){
       setBusy(false);
       return;
     }
+    if (res.data.conversation_id) convoId = res.data.conversation_id;
     var reply = res.data.reply || '';
     talkHistory.push({ role: 'assistant', content: reply });
     aiBubble(renderReply(reply));
