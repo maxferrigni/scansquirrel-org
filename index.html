@@ -71,6 +71,24 @@ a.corner:hover { color: var(--acorn); }
 .zip-row { display: flex; gap: 0.5rem; margin-bottom: 1.4rem; }
 .zip-row input { flex: 1; padding: 0.75rem 1rem; border: 1px solid var(--line); border-radius: 10px; font: inherit; font-size: 1rem; background: var(--warm); }
 .zip-row input:focus { outline: none; border-color: var(--acorn); }
+.contact-row { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.4rem; }
+.contact-row input { padding: 0.75rem 1rem; border: 1px solid var(--line); border-radius: 10px; font: inherit; font-size: 1rem; background: var(--warm); }
+.contact-row input:focus { outline: none; border-color: var(--acorn); }
+.contact-row .c-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.25rem; }
+.contact-row .err { font-size: 0.85rem; color: #b4472e; min-height: 1.1em; }
+
+/* ── Squirrel Talk: live reply box + typing indicator ── */
+.reply-row { display: flex; gap: 0.5rem; margin-top: 1.2rem; }
+.reply-row input { flex: 1; padding: 0.85rem 1.1rem; border: 1px solid var(--line); border-radius: 999px; font: inherit; font-size: 1rem; background: #fff; }
+.reply-row input:focus { outline: none; border-color: var(--acorn); }
+.reply-row button { flex: none; }
+.reply-row button[disabled] { opacity: 0.45; cursor: default; }
+.typing { display: flex; gap: 0.28rem; padding: 0.2rem 0 0.6rem; }
+.typing span { width: 0.42rem; height: 0.42rem; border-radius: 50%; background: var(--branch); animation: blink 1.3s infinite; }
+.typing span:nth-child(2) { animation-delay: 0.18s; }
+.typing span:nth-child(3) { animation-delay: 0.36s; }
+@keyframes blink { 0%, 60%, 100% { opacity: 0.25; } 30% { opacity: 1; } }
+.talk-err { font-size: 0.9rem; color: #b4472e; margin-top: 0.6rem; }
 .btn { font: inherit; font-size: 1rem; font-weight: 600; padding: 0.8rem 1.6rem; border: none; border-radius: 12px; background: var(--acorn); color: var(--bone); cursor: pointer; text-decoration: none; }
 .btn:hover { background: var(--acorn2); }
 .btn.ghost { background: transparent; color: var(--acorn); border: 1px solid var(--line); }
@@ -170,16 +188,46 @@ a.corner:hover { color: var(--acorn); }
 </section>
 
 <script>
-/* ── CAPTURE: paste an endpoint URL to record what people type
-   (free form at formspree.io → paste its URL here). Until then, console only. ── */
+/* ═══════════════════════════════════════════════════════════════════════
+   WHERE INTAKE GOES — paste ONE endpoint URL below and capture turns on.
+
+   While this is empty, every submission is console-only and IS LOST.
+
+   Works with either:
+     • Google Apps Script web app  → https://script.google.com/macros/s/…/exec
+     • Formspree form              → https://formspree.io/f/xxxxxxxx
+   The transport auto-switches based on the URL — nothing else to change.
+   ═══════════════════════════════════════════════════════════════════════ */
 var LOG_URL = '';
+
+/* payload matches the app's planned POST /api/leads:
+   { event, text, size, pref, zip, email, phone, timestamp, source } */
 function logIt(data){
-  /* payload matches the app's planned POST /api/leads: { text, size, pref, zip, timestamp, source } */
   data.timestamp = new Date().toISOString();
   data.source = 'scansquirrel.org';
-  if (LOG_URL){ try { fetch(LOG_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data) }); } catch(e){} }
-  else { console.log('[intake]', data); }
+  if (!LOG_URL){ console.log('[intake]', data); return; }
+  var body = JSON.stringify(data);
+  var isFormspree = LOG_URL.indexOf('formspree.io') !== -1;
+  if (isFormspree){
+    /* Formspree parses JSON and needs real CORS; it sends the right headers back. */
+    try { fetch(LOG_URL, { method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body: body, keepalive:true }); } catch(e){}
+    return;
+  }
+  /* Apps Script: text/plain avoids the CORS preflight it can't answer.
+     sendBeacon first so a half-finished visitor still gets recorded. */
+  try {
+    if (navigator.sendBeacon && navigator.sendBeacon(LOG_URL, new Blob([body], {type:'text/plain;charset=UTF-8'}))) return;
+  } catch(e){}
+  try { fetch(LOG_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=UTF-8'}, body: body, keepalive:true }); } catch(e){}
 }
+
+/* If someone starts the conversation and leaves without finishing, keep what we got. */
+var sentFinal = false;
+window.addEventListener('pagehide', function(){
+  if (state.text && !sentFinal){
+    logIt({ event:'abandoned', text:state.text, size:state.size||'', pref:state.pref||'', zip:state.zip||'', email:state.email||'', phone:state.phone||'' });
+  }
+});
 
 /* ── rotating example prompts under the box (same fade logic as the live nav) ── */
 function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
@@ -204,33 +252,116 @@ setTimeout(function(){ rotateTag(); exTimer = setInterval(rotateTag, 3500); }, 3
 var convo = document.getElementById('convo'), state = {};
 function aiBubble(html){ var d=document.createElement('div'); d.className='bubble ai'; d.innerHTML='<div class="who">Scan Squirrel</div><div class="msg">'+html+'</div>'; convo.appendChild(d); d.scrollIntoView({behavior:'smooth',block:'center'}); }
 function meBubble(t){ var d=document.createElement('div'); d.className='bubble me'; d.innerHTML='<div class="msg">'+t+'</div>'; convo.appendChild(d); }
-function answerRow(options, cb){ var row=document.createElement('div'); row.className='answers'; options.forEach(function(opt){ var b=document.createElement('button'); b.className='chip'; b.textContent=opt; b.onclick=function(){ row.remove(); meBubble(opt); cb(opt); }; row.appendChild(b); }); convo.appendChild(row); row.scrollIntoView({behavior:'smooth',block:'center'}); }
+
+/* ═══ SQUIRREL TALK — real Claude conversation ══════════════════════════
+   The API key lives on the backend, never here. This page only POSTs the
+   transcript and renders the reply.
+
+   TODO before this goes live on the real .org: merge dev → main in
+   scansquirrel-web and point API_BASE at the PROD backend (and add
+   scansquirrel.org to PROD's CORS_ORIGINS too).
+   ═══════════════════════════════════════════════════════════════════════ */
+var API_BASE = 'https://backend-development-4bb2.up.railway.app';  // DEV backend
+var TALK_URL = API_BASE + '/api/squirrel-talk/chat';
+
+var history = [];      // [{role, content}] — the transcript we send each turn
+var busy = false;
+var replyInput = null, replyBtn = null;
+
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+/* Claude replies in plain text with blank-line paragraphs — render, don't inject. */
+function renderReply(text){
+  return esc(text).split(/\n\s*\n/).map(function(p){
+    return p.replace(/\n/g, '<br>');
+  }).join('<br><br>');
+}
+
+function showTyping(){
+  var d = document.createElement('div');
+  d.className = 'bubble ai'; d.id = 'typing';
+  d.innerHTML = '<div class="who">Scan Squirrel</div><div class="typing"><span></span><span></span><span></span></div>';
+  convo.appendChild(d); d.scrollIntoView({behavior:'smooth', block:'center'});
+}
+function hideTyping(){ var t = document.getElementById('typing'); if (t) t.remove(); }
+
+function ensureReplyBox(){
+  if (replyInput) return;
+  var row = document.createElement('div'); row.className = 'reply-row';
+  row.innerHTML = '<input id="replyIn" type="text" autocomplete="off" placeholder="Reply…">'
+                + '<button class="btn" type="button">Send</button>';
+  convo.appendChild(row);
+  replyInput = row.querySelector('input');
+  replyBtn = row.querySelector('button');
+  replyBtn.onclick = sendReply;
+  replyInput.onkeydown = function(e){ if (e.key === 'Enter'){ e.preventDefault(); sendReply(); } };
+}
+
+function setBusy(v){
+  busy = v;
+  if (replyBtn) replyBtn.disabled = v;
+  if (replyInput) replyInput.disabled = v;
+}
+
+function talkError(msg){
+  var d = document.createElement('div'); d.className = 'talk-err';
+  d.textContent = msg + ' You can always email hello@scansquirrel.com or call (213) 290-2327.';
+  convo.appendChild(d); d.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+/* Send the whole transcript; render the reply. */
+function askSquirrel(){
+  setBusy(true);
+  showTyping();
+  fetch(TALK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ source: 'scansquirrel.org', messages: history })
+  }).then(function(r){
+    return r.json().then(function(data){ return { ok: r.ok, status: r.status, data: data }; });
+  }).then(function(res){
+    hideTyping();
+    if (!res.ok){
+      talkError(res.data && res.data.detail ? res.data.detail : 'Something went wrong.');
+      setBusy(false);
+      return;
+    }
+    var reply = res.data.reply || '';
+    history.push({ role: 'assistant', content: reply });
+    aiBubble(renderReply(reply));
+    ensureReplyBox();
+    setBusy(false);
+    if (replyInput) replyInput.focus();
+  }).catch(function(){
+    hideTyping();
+    talkError("I couldn't reach Squirrel Talk just now.");
+    setBusy(false);
+  });
+}
 
 function startConvo(){
-  var txt=document.getElementById('projText').value.trim();
-  if(!txt){ document.getElementById('projText').focus(); return; }
+  var txt = document.getElementById('projText').value.trim();
+  if (!txt){ document.getElementById('projText').focus(); return; }
   if (exTimer) clearInterval(exTimer);
-  document.getElementById('intake').style.display='none';
+  document.getElementById('intake').style.display = 'none';
   convo.classList.add('show');
   state.text = txt;
-  logIt({ event:'started', text: txt });
-  meBubble(txt);
-  setTimeout(function(){ aiBubble("Got it. A couple of quick questions.<br><br><b>Roughly how much do you have?</b>"); answerRow(['A shoebox or two','A closet full','A few albums','Not sure'], q2); },350);
+  logIt({ event: 'started', text: txt });
+  meBubble(esc(txt));
+  history.push({ role: 'user', content: txt });
+  askSquirrel();
 }
-function q2(s){ state.size=s; setTimeout(function(){ aiBubble("<b>Scan it yourself, or get local help?</b>"); answerRow(['Myself','Get help','Help me decide'], q3); },300); }
-function q3(p){ state.pref=p; setTimeout(function(){
-  aiBubble("<b>What ZIP code are you in?</b>");
-  var row=document.createElement('div'); row.className='zip-row';
-  row.innerHTML='<input id="zipIn" inputmode="numeric" maxlength="5" placeholder="91101"><button class="btn" type="button">Check</button>';
-  row.querySelector('button').onclick=function(){ var z=row.querySelector('#zipIn').value.trim()||'91101'; state.zip=z; logIt({ event:'completed', text: state.text, size: state.size, pref: state.pref, zip: z }); row.remove(); meBubble(z); guidance(); };
-  convo.appendChild(row); row.querySelector('#zipIn').focus(); row.scrollIntoView({behavior:'smooth',block:'center'});
-},300); }
-function guidance(){
-  var hours = state.size==='A closet full' ? '25–40 hours' : state.size==='A few albums' ? '5–10 hours' : '15–25 hours';
-  setTimeout(function(){
-    aiBubble("Looks like a <b>medium mixed collection</b>. Doing it yourself well runs about <b>"+hours+"</b> and often needs a film scanner.<br><br>You can scan it yourself with Scan Squirrel, or connect with an independent local operator who has the right equipment.<br><br><span style='font-size:0.85rem;color:var(--ash);'>General guidance, not a final price — operators set their own pricing.</span><div class='g-actions'><a class='btn' href='#'>Start scanning</a><a class='btn ghost' href='#'>Find local help</a></div>");
-    var r=document.createElement('button'); r.className='restart'; r.textContent='↺ Start over'; r.onclick=function(){ location.reload(); }; convo.appendChild(r);
-  },450);
+
+function sendReply(){
+  if (busy || !replyInput) return;
+  var txt = replyInput.value.trim();
+  if (!txt) return;
+  replyInput.value = '';
+  meBubble(esc(txt));
+  history.push({ role: 'user', content: txt });
+  logIt({ event: 'reply', text: txt, turns: history.length });
+  askSquirrel();
 }
 </script>
 
