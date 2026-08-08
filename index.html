@@ -89,6 +89,14 @@ a.corner:hover { color: var(--acorn); }
 .typing span:nth-child(3) { animation-delay: 0.36s; }
 @keyframes blink { 0%, 60%, 100% { opacity: 0.25; } 30% { opacity: 1; } }
 .talk-err { font-size: 0.9rem; color: #b4472e; margin-top: 0.6rem; }
+.est { border: 1px solid var(--line); border-radius: 14px; background: #fff; padding: 1rem 1.1rem; margin: 0.2rem 0 1rem; }
+.est h4 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1rem; color: var(--bark); margin-bottom: 0.7rem; }
+.est table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.est td { padding: 0.3rem 0; vertical-align: top; }
+.est td.amt { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.est td .det { display: block; font-size: 0.82rem; color: var(--ash); }
+.est tr.tot td { border-top: 1px solid var(--line); padding-top: 0.55rem; font-weight: 600; }
+.est .note { font-size: 0.8rem; color: var(--ash); line-height: 1.45; margin-top: 0.7rem; }
 .btn { font: inherit; font-size: 1rem; font-weight: 600; padding: 0.8rem 1.6rem; border: none; border-radius: 12px; background: var(--acorn); color: var(--bone); cursor: pointer; text-decoration: none; }
 .btn:hover { background: var(--acorn2); }
 .btn.ghost { background: transparent; color: var(--acorn); border: 1px solid var(--line); }
@@ -286,6 +294,25 @@ function addToConvo(el){
   el.scrollIntoView({behavior:'smooth', block:'center'});
 }
 
+/* Estimate card. The server parses it out of the reply; we just draw it. */
+function money(n){ return '$' + Number(n).toLocaleString(undefined, {maximumFractionDigits:0}); }
+function estimateCard(est){
+  var rows = est.lines.map(function(l){
+    return '<tr><td>' + esc(l.label)
+         + (l.detail ? '<span class="det">' + esc(l.detail) + '</span>' : '')
+         + '</td><td class="amt">' + money(l.amount) + '</td></tr>';
+  }).join('');
+  var total = (est.low === est.high) ? money(est.low) : money(est.low) + '–' + money(est.high);
+  var d = document.createElement('div');
+  d.className = 'est';
+  d.innerHTML = '<h4>Starting point</h4><table>' + rows
+    + '<tr class="tot"><td>Estimated total</td><td class="amt">' + total + '</td></tr></table>'
+    + '<p class="note">A guide based on typical rates — not a quote. Your Squirrel agrees the '
+    + 'final price with you before any work starts, and it can shift a little with the condition '
+    + 'of your photos and how much sorting they need.</p>';
+  addToConvo(d);
+}
+
 function showTyping(){
   var d = document.createElement('div');
   d.className = 'bubble ai'; d.id = 'typing';
@@ -339,6 +366,9 @@ function askSquirrel(){
     var reply = res.data.reply || '';
     talkHistory.push({ role: 'assistant', content: reply });
     aiBubble(renderReply(reply));
+    if (res.data.estimate && res.data.estimate.lines && res.data.estimate.lines.length) {
+      try { estimateCard(res.data.estimate); } catch(e){}
+    }
     ensureReplyBox();
     setBusy(false);
     if (replyInput) replyInput.focus();
