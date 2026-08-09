@@ -90,14 +90,10 @@ a.corner:hover { color: var(--acorn); }
 @keyframes blink { 0%, 60%, 100% { opacity: 0.25; } 30% { opacity: 1; } }
 .talk-err { font-size: 0.9rem; color: #b4472e; margin-top: 0.6rem; }
 
-/* ── "Where are my photos?" — the no-login answer for clients ── */
-.findphotos { max-width: 30rem; margin: 3.5rem auto 0; padding: 1.3rem 1.5rem; text-align: left;
-  border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,0.55); }
-.findphotos h3 { font-size: 1.05rem; color: var(--bark); margin-bottom: 0.5rem; }
-.findphotos p { font-size: 0.9rem; line-height: 1.55; color: var(--ash); }
-.findphotos p.lost { margin-top: 0.7rem; font-size: 0.85rem; }
-.findphotos a { color: var(--acorn); }
-:target.findphotos { border-color: var(--acorn); }
+/* Clients don't log in — one quiet line, not a panel. */
+.findlink { font-size: 0.8rem; line-height: 1.5; color: var(--branch); max-width: 30rem; margin: 1.1rem auto 0; }
+.findlink a { color: var(--branch); text-decoration: underline; }
+.findlink a:hover { color: var(--acorn); }
 
 /* ── Customer invitation, under the intake box ── */
 .invite { margin-top: 2.1rem; text-align: center; }
@@ -105,10 +101,6 @@ a.corner:hover { color: var(--acorn); }
 .invite-note { font-size: 0.87rem; line-height: 1.5; color: var(--ash); max-width: 30rem; margin: 0.85rem auto 0; }
 .convo.show ~ .invite { margin-top: 1.4rem; }
 
-/* ── Squirrel sign-in, down in the operator band ── */
-.ocol-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.9rem; }
-.squirrel-signin { font-size: 0.88rem; color: var(--nest); text-decoration: none; }
-.squirrel-signin:hover { color: var(--bone); }
 .est { border: 1px solid var(--line); border-radius: 14px; background: #fff; padding: 1rem 1.1rem; margin: 0.2rem 0 1rem; }
 .est h4 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1rem; color: var(--bark); margin-bottom: 0.7rem; }
 .est table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
@@ -161,7 +153,7 @@ a.corner:hover { color: var(--acorn); }
 <header class="hero">
   <span class="corner tl">A Los Angeles photo-preservation project</span>
   <nav class="topauth">
-    <a href="#photos">Looking for your photos?</a>
+    <a href="https://app.scansquirrel.org/sign-in?as=squirrel" target="_blank" rel="noopener">Squirrel log in</a>
   </nav>
 
   <div class="col">
@@ -186,17 +178,10 @@ a.corner:hover { color: var(--acorn); }
     <div class="invite">
       <a class="btn" href="https://app.scansquirrel.org/sign-up?as=home" target="_blank" rel="noopener">Start free — your first 100 scans</a>
       <p class="invite-note">Use our software to digitize your own photos, slides, negatives, documents &mdash; whatever you’ve got. No card, no subscription. Or find a local Squirrel to do it for you and work out pricing together.</p>
+      <p class="findlink">Had a Squirrel scan for you? They emailed you a link &mdash; no account needed.
+        <a href="mailto:hello@scansquirrel.com?subject=I%20can%27t%20find%20my%20photo%20link">Can&rsquo;t find it?</a></p>
     </div>
   </div>
-
-  <section class="findphotos" id="photos">
-    <h3>Looking for your photos?</h3>
-    <p>If a Squirrel scanned for you, they emailed you a link &mdash; open it and your photos are there.
-       No account, no password. The same link shows how things are going while the work is still underway.</p>
-    <p class="lost">Can&rsquo;t find the email? Check your spam folder for &ldquo;Scan Squirrel&rdquo;, or
-       <a href="mailto:hello@scansquirrel.com?subject=I%20can%27t%20find%20my%20photo%20link">ask us to resend it</a>
-       &mdash; tell us who scanned for you and we&rsquo;ll track it down.</p>
-  </section>
 
   <a class="corner bl" href="mailto:hello@scansquirrel.com">hello@scansquirrel.com</a>
   <a class="corner br" href="tel:+12132902327">(213) 290-2327</a>
@@ -212,10 +197,7 @@ a.corner:hover { color: var(--acorn); }
       <div class="ocol">
         <h3>Become a squirrel</h3>
         <p>Have a scanner? Use Scan Squirrel's tools to preserve memories for your neighbors — and earn.</p>
-        <div class="ocol-actions">
-          <a class="btn ghost" href="mailto:hello@scansquirrel.com?subject=Becoming%20a%20Squirrel">Learn about becoming a squirrel</a>
-          <a class="squirrel-signin" href="https://app.scansquirrel.org/sign-in?as=squirrel" target="_blank" rel="noopener">Squirrel log in →</a>
-        </div>
+        <a class="btn ghost" href="mailto:hello@scansquirrel.com?subject=Becoming%20a%20Squirrel">Learn about becoming a squirrel</a>
         <p class="indep">Squirrels are independent and set their own pricing, schedule, and services.</p>
       </div>
     </div>
