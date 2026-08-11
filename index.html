@@ -52,7 +52,7 @@ a.corner:hover { color: var(--acorn); }
   background: #fff; box-shadow: 0 2px 16px rgba(92,74,58,0.07);
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
-.searchbox::placeholder { color: #a89e90; }
+.searchbox::placeholder { color: var(--ash); }
 .searchbox:focus { outline: none; border-color: var(--acorn); box-shadow: 0 6px 26px rgba(92,74,58,0.14); }
 /* The placeholder cross-fades between prompts, so it can't jump-cut mid-read. */
 .searchbox::placeholder { transition: opacity 0.4s ease; }
@@ -270,14 +270,14 @@ function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random
 var ASK = 'Ask a question, or describe what you have…';
 /* No quote marks: inside a field they read as text that's already there. */
 var EXAMPLES = shuffle([
-  "My mother just passed away and I want to scan her old photos — how do I start?",
-  "I have hundreds of photos from college — what would it cost, and can I do it myself?",
-  "We found boxes of slides in my dad's garage — can someone come help?",
-  "I want to preserve my grandparents' wedding album before it falls apart",
-  "Can a Squirrel come to my house in Pasadena and scan everything?",
-  "40 years of family negatives — cheaper to do it myself or hire help?",
-  "My kids want our old home photos digitized before the holidays",
-  "I'm downsizing and need a lifetime of documents scanned fast"
+  "Scanning my mom's old photos",
+  "Boxes of slides in the garage",
+  "Can someone come to my house?",
+  "What would 500 photos cost?",
+  "40 years of family negatives",
+  "My grandparents' wedding album",
+  "A lifetime of documents",
+  "Cheaper to do it myself?"
 ]);
 
 var box = document.getElementById('projText');
@@ -288,7 +288,7 @@ function rotatePlaceholder(){
   box.classList.add('fading');
   setTimeout(function(){
     if (showingAsk){
-      box.placeholder = EXAMPLES[exIdx];
+      box.placeholder = '\u201C' + EXAMPLES[exIdx] + '\u201D';
       exIdx = (exIdx + 1) % EXAMPLES.length;
     } else {
       box.placeholder = ASK;
@@ -304,7 +304,7 @@ function stopRotating(){
 }
 if (box){
   box.addEventListener('focus', stopRotating);
-  exTimer = setInterval(rotatePlaceholder, 3800);
+  exTimer = setInterval(rotatePlaceholder, 2400);
 }
 
 var convo = document.getElementById('convo'), state = {};
