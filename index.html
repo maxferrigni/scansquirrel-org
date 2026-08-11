@@ -170,7 +170,7 @@ a.corner:hover { color: var(--acorn); }
     <p class="intro">Scan Squirrel helps you digitize old photos, slides, negatives, documents &mdash; whatever you’ve been meaning to get to. Do it yourself with our software, or have a local Squirrel come to you and handle it all.</p>
     <div class="intake" id="intake">
       <input class="searchbox" id="projText" type="text" autocomplete="off"
-             placeholder="Ask a question, or describe what you have…"
+             placeholder="&ldquo;How much to scan an album?&rdquo;"
              onkeydown="if(event.key==='Enter'){event.preventDefault();startConvo();}">
     </div>
     <div class="convo" id="convo"></div>
@@ -259,16 +259,16 @@ window.addEventListener('pagehide', function(){
    These used to sit on their own line under the input. Folding them into the
    placeholder buys back a line (two on a phone) without losing the examples.
 
-   The instruction is what's in the HTML, so it's what someone sees on arrival.
-   After that it's questions only — coming back to it every other beat read as
-   a stutter once the examples got short.
+   Questions only. An instruction ("Ask a question, or describe what you have")
+   used to alternate with these and reappear on focus; it was saying what the
+   questions already demonstrate, and the swap read as the box changing its
+   mind.
 
    Rotation stops on focus rather than on the first keystroke — once someone
    has clicked in they've decided, and text moving under a live cursor is
    unsettling. It never restarts; they've seen what it was for.            */
 function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
 
-var ASK = 'Ask a question, or describe what you have…';
 var EXAMPLES = shuffle([
   "How much to scan an album?",
   "Can you do negatives?",
@@ -295,7 +295,7 @@ function rotatePlaceholder(){
 
 function stopRotating(){
   if (exTimer){ clearInterval(exTimer); exTimer = null; }
-  if (box){ box.classList.remove('fading'); box.placeholder = ASK; }
+  if (box) box.classList.remove('fading');
 }
 if (box){
   box.addEventListener('focus', stopRotating);
