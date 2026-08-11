@@ -54,8 +54,9 @@ a.corner:hover { color: var(--acorn); }
 }
 .searchbox::placeholder { color: #a89e90; }
 .searchbox:focus { outline: none; border-color: var(--acorn); box-shadow: 0 6px 26px rgba(92,74,58,0.14); }
-.tagline { text-align: center; font-size: 1rem; color: var(--ash); line-height: 1.5; margin: 1.3rem auto 0; max-width: 32rem; min-height: 1.5em; opacity: 0; transition: opacity 0.45s ease; }
-.tagline.vis { opacity: 1; }
+/* The placeholder cross-fades between prompts, so it can't jump-cut mid-read. */
+.searchbox::placeholder { transition: opacity 0.4s ease; }
+.searchbox.fading::placeholder { opacity: 0; }
 
 /* ── conversation ── */
 .convo { display: none; text-align: left; }
@@ -171,7 +172,6 @@ a.corner:hover { color: var(--acorn); }
       <input class="searchbox" id="projText" type="text" autocomplete="off"
              placeholder="Ask a question, or describe what you have…"
              onkeydown="if(event.key==='Enter'){event.preventDefault();startConvo();}">
-      <p class="tagline" id="tagline">&ldquo;Help me with photos from my parents&rdquo;</p>
     </div>
     <div class="convo" id="convo"></div>
 
@@ -255,8 +255,20 @@ window.addEventListener('pagehide', function(){
   }
 });
 
-/* ── rotating example prompts under the box (same fade logic as the live nav) ── */
+/* ── Rotating prompts, in the box itself ────────────────────────────────
+   These used to sit on their own line under the input. Folding them into the
+   placeholder buys back a line (two on a phone) without losing the examples.
+
+   The instruction leads and comes back between examples: on its own, a
+   rotation of only sample sentences reads as "type this", and people do.
+
+   Rotation stops on focus rather than on the first keystroke — once someone
+   has clicked in they've decided, and text moving under a live cursor is
+   unsettling. It never restarts; they've seen what it was for.            */
 function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+
+var ASK = 'Ask a question, or describe what you have…';
+/* No quote marks: inside a field they read as text that's already there. */
 var EXAMPLES = shuffle([
   "My mother just passed away and I want to scan her old photos — how do I start?",
   "I have hundreds of photos from college — what would it cost, and can I do it myself?",
@@ -267,13 +279,33 @@ var EXAMPLES = shuffle([
   "My kids want our old home photos digitized before the holidays",
   "I'm downsizing and need a lifetime of documents scanned fast"
 ]);
-var exIdx = 0, exTimer = null, tagEl = document.getElementById('tagline');
-function rotateTag(){
-  tagEl.classList.remove('vis');
-  setTimeout(function(){ tagEl.innerHTML = '&ldquo;' + EXAMPLES[exIdx] + '&rdquo;'; exIdx = (exIdx+1) % EXAMPLES.length; tagEl.classList.add('vis'); }, 450);
+
+var box = document.getElementById('projText');
+var exIdx = 0, exTimer = null, showingAsk = true;
+
+function rotatePlaceholder(){
+  if (!box || document.activeElement === box || box.value) return;
+  box.classList.add('fading');
+  setTimeout(function(){
+    if (showingAsk){
+      box.placeholder = EXAMPLES[exIdx];
+      exIdx = (exIdx + 1) % EXAMPLES.length;
+    } else {
+      box.placeholder = ASK;
+    }
+    showingAsk = !showingAsk;
+    box.classList.remove('fading');
+  }, 400);
 }
-setTimeout(function(){ tagEl.classList.add('vis'); }, 300);
-setTimeout(function(){ rotateTag(); exTimer = setInterval(rotateTag, 3500); }, 3500);
+
+function stopRotating(){
+  if (exTimer){ clearInterval(exTimer); exTimer = null; }
+  if (box){ box.classList.remove('fading'); box.placeholder = ASK; }
+}
+if (box){
+  box.addEventListener('focus', stopRotating);
+  exTimer = setInterval(rotatePlaceholder, 3800);
+}
 
 var convo = document.getElementById('convo'), state = {};
 function aiBubble(html){ var d=document.createElement('div'); d.className='bubble ai'; d.innerHTML='<div class="who">Scan Squirrel</div><div class="msg">'+html+'</div>'; addToConvo(d); }
