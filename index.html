@@ -259,8 +259,9 @@ window.addEventListener('pagehide', function(){
    These used to sit on their own line under the input. Folding them into the
    placeholder buys back a line (two on a phone) without losing the examples.
 
-   The instruction leads and comes back between examples: on its own, a
-   rotation of only sample sentences reads as "type this", and people do.
+   The instruction is what's in the HTML, so it's what someone sees on arrival.
+   After that it's questions only — coming back to it every other beat read as
+   a stutter once the examples got short.
 
    Rotation stops on focus rather than on the first keystroke — once someone
    has clicked in they've decided, and text moving under a live cursor is
@@ -268,32 +269,26 @@ window.addEventListener('pagehide', function(){
 function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
 
 var ASK = 'Ask a question, or describe what you have…';
-/* No quote marks: inside a field they read as text that's already there. */
 var EXAMPLES = shuffle([
-  "Scanning my mom's old photos",
-  "Boxes of slides in the garage",
+  "How much to scan an album?",
+  "Can you do negatives?",
   "Can someone come to my house?",
   "What would 500 photos cost?",
-  "40 years of family negatives",
-  "My grandparents' wedding album",
-  "A lifetime of documents",
-  "Cheaper to do it myself?"
+  "Do you scan old documents?",
+  "Cheaper to do it myself?",
+  "How long does it take?",
+  "What about slides?"
 ]);
 
 var box = document.getElementById('projText');
-var exIdx = 0, exTimer = null, showingAsk = true;
+var exIdx = 0, exTimer = null;
 
 function rotatePlaceholder(){
   if (!box || document.activeElement === box || box.value) return;
   box.classList.add('fading');
   setTimeout(function(){
-    if (showingAsk){
-      box.placeholder = '\u201C' + EXAMPLES[exIdx] + '\u201D';
-      exIdx = (exIdx + 1) % EXAMPLES.length;
-    } else {
-      box.placeholder = ASK;
-    }
-    showingAsk = !showingAsk;
+    box.placeholder = '\u201C' + EXAMPLES[exIdx] + '\u201D';
+    exIdx = (exIdx + 1) % EXAMPLES.length;
     box.classList.remove('fading');
   }, 400);
 }
